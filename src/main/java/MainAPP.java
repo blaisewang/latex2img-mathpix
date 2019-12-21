@@ -161,6 +161,9 @@ public class MainAPP extends Application {
 
         }
 
+        // set the app window always on top
+        this.stage.setAlwaysOnTop(true);
+
         // show the primary stage
         this.stage.show();
 

@@ -3,6 +3,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.lang3.SystemUtils;
@@ -136,6 +137,13 @@ public class MainAPP extends Application {
 
         // initialise scene with the BackGridPane
         Scene scene = new Scene(backGridPane);
+
+        // press enter key to send the OCR request
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                backGridPane.requestHandler();
+            }
+        });
 
         // add scene to the primary stage
         this.stage.setScene(scene);

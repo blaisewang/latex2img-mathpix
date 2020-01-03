@@ -203,7 +203,7 @@ class BackGridPane extends GridPane {
                         // clear error image and last results
                         clearErrorImage();
                         // show error content with a alert dialog
-                        Utilities.showErrorDialog(response.getError());
+                        Utilities.displayError(response.getError());
 
                         return;
                     }
@@ -239,7 +239,7 @@ class BackGridPane extends GridPane {
 
                 } else {
                     // no response received
-                    Utilities.showErrorDialog("Unexpected error occurred");
+                    Utilities.displayError("Unexpected error occurred");
                     clearErrorImage();
                 }
 
@@ -249,7 +249,7 @@ class BackGridPane extends GridPane {
         } else {
 
             // no image in the system clipboard
-            Utilities.showErrorDialog("No image found in the clipboard");
+            Utilities.displayError("No image found in the clipboard");
 
         }
 

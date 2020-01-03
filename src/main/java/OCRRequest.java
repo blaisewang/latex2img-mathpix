@@ -41,7 +41,6 @@ class OCRRequest {
             app_id = appConfig.getApp_id();
             app_key = appConfig.getApp_key();
         } else {
-            Utilities.showErrorDialog("Illegal App ID or App Key");
             // early return
             return null;
         }

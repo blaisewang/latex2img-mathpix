@@ -140,7 +140,7 @@ public class MainAPP extends Application {
         Scene scene = new Scene(backGridPane);
 
         // enter key pressed event binding to the Scene
-        scene.onKeyPressedProperty().bind(backGridPane.onKeyPressedProperty());
+        scene.onKeyReleasedProperty().bind(backGridPane.onKeyReleasedProperty());
 
         // add scene to the primary stage
         this.stage.setScene(scene);

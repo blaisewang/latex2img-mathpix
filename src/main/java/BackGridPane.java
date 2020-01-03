@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.time.Instant;
+
 
 /**
  * BackGridPane.java
@@ -27,6 +29,8 @@ class BackGridPane extends GridPane {
     private static ImageView renderedImageView = new ImageView();
     private static Label waitingTextLabel = new Label("Waiting...");
     private static ProgressBar confidenceProgressBar = new ProgressBar(0);
+
+    private static long lastRequestCompletionTimestamp = Instant.now().getEpochSecond();
 
     private static final Color PANE_BORDER_COLOR = new Color(0.898, 0.902, 0.9216, 1);
     private static final BorderWidths PANE_BORDER_WIDTHS = new BorderWidths(1, 0, 1, 0);
@@ -82,7 +86,7 @@ class BackGridPane extends GridPane {
         this.add(renderedBorderPane, 0, 3, 2, 1);
 
         // enter key pressed event to send the OCR request
-        frontGridPane.setOnKeyPressed(event -> {
+        frontGridPane.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 this.requestHandler();
             }
@@ -91,7 +95,7 @@ class BackGridPane extends GridPane {
         this.add(frontGridPane, 0, 4, 2, 1);
 
         // enter key pressed event binding to the FrontGridPane
-        this.onKeyPressedProperty().bind(frontGridPane.onKeyPressedProperty());
+        this.onKeyReleasedProperty().bind(frontGridPane.onKeyReleasedProperty());
 
         // add "Confidence" label text
         Label confidenceText = Utilities.getTextLabel("Confidence");
@@ -173,6 +177,12 @@ class BackGridPane extends GridPane {
      */
     void requestHandler() {
 
+        // prevent multiple OCR requests from being sent in a short time
+        if (Instant.now().getEpochSecond() - lastRequestCompletionTimestamp < 2) {
+            lastRequestCompletionTimestamp = Instant.now().getEpochSecond();
+            return;
+        }
+
         Image clipboardImage = clipboardImageView.getImage();
 
         if (clipboardImage != null) {
@@ -252,6 +262,8 @@ class BackGridPane extends GridPane {
             Utilities.displayError("No image found in the clipboard");
 
         }
+
+        lastRequestCompletionTimestamp = Instant.now().getEpochSecond();
 
     }
 

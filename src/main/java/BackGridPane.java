@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -80,8 +81,17 @@ class BackGridPane extends GridPane {
         BorderPane renderedBorderPane = setImageViewBorder(renderedImageView);
         this.add(renderedBorderPane, 0, 3, 2, 1);
 
+        // enter key pressed event to send the OCR request
+        frontGridPane.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                this.requestHandler();
+            }
+        });
         // add front grid panel
         this.add(frontGridPane, 0, 4, 2, 1);
+
+        // enter key pressed event binding to the FrontGridPane
+        this.onKeyPressedProperty().bind(frontGridPane.onKeyPressedProperty());
 
         // add "Confidence" label text
         Label confidenceText = Utilities.getTextLabel("Confidence");

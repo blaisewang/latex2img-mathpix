@@ -238,10 +238,9 @@ class BackGridPane extends GridPane {
                     confidenceProgressBar.setProgress(confidence);
 
                 } else {
-
                     // no response received
+                    Utilities.showErrorDialog("Unexpected error occurred");
                     clearErrorImage();
-
                 }
 
             });

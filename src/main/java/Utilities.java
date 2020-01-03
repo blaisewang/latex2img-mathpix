@@ -89,8 +89,6 @@ class Utilities {
             try {
                 return result.get();
             } catch (InterruptedException | ExecutionException e) {
-                // show internet connection error
-                showErrorDialog("Broken internet connection");
                 return null;
             }
         }

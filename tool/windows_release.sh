@@ -1,6 +1,6 @@
 cd ../build/libs || exit
 
-FILENAME="$(ls *windows.zip)"
+FILENAME="$(ls ./*windows.zip)"
 
 unzip -q "$FILENAME"
 

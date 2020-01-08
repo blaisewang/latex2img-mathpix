@@ -47,7 +47,7 @@ class OCRRequest {
 
         // workaround to resolve #26
         SSLContext context = SSLContexts.createSystemDefault();
-        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, new String[]{"TLSv1"}, null, NoopHostnameVerifier.INSTANCE);
+        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, Utilities.SUPPORTED_PROTOCOLS, null, NoopHostnameVerifier.INSTANCE);
 
         // maximum connection waiting time 10 seconds
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10000).build();
@@ -78,6 +78,8 @@ class OCRRequest {
             HttpResponse result = httpClient.execute(request);
             // obtain the message entity of this response
             json = EntityUtils.toString(result.getEntity(), "UTF-8");
+            // close and release resources
+            httpClient.close();
         } catch (IOException e) {
             return null;
         }

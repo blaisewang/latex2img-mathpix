@@ -1,3 +1,5 @@
+package UI;
+
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
@@ -10,7 +12,7 @@ import javafx.scene.text.Font;
 
 
 /**
- * PressCopyTextField.java
+ * UI.PressCopyTextField.java
  * Extension of javafx.scene.control.TextField.
  * With customised border stroke and click-to-copy function.
  */
@@ -29,7 +31,7 @@ public class PressCopyTextField extends TextField {
         this.setPrefWidth(220);
         this.setPrefHeight(20);
 
-        // PressCopyTextField is not editable
+        // UI.PressCopyTextField is not editable
         this.setEditable(false);
 
         this.setBorder(new Border(BORDER_STROKE));
@@ -39,17 +41,17 @@ public class PressCopyTextField extends TextField {
         // initialise with black text colour
         this.setStyle("-fx-text-inner-color: black;");
 
-        // text colour turns to light blue when mouse enters the PressCopyTextField
+        // text colour turns to light blue when mouse enters the UI.PressCopyTextField
         this.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> this.setStyle("-fx-text-inner-color: #3d93f7;"));
 
-        // text colour turns back to black when mouse exits the PressCopyTextField
+        // text colour turns back to black when mouse exits the UI.PressCopyTextField
         this.addEventHandler(MouseEvent.MOUSE_EXITED, event -> this.setStyle("-fx-text-inner-color: black;"));
 
-        // put the formatted text into clipboard when the PressCopyTextField is clicked
+        // put the formatted text into clipboard when the UI.PressCopyTextField is clicked
         this.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             if (getLength() > 0) {
                 // copy text if there is text
-                CommonUtils.putStringIntoClipboard(this.formattedText);
+                Utils.putStringIntoClipboard(this.formattedText);
             }
         });
 
@@ -77,7 +79,7 @@ public class PressCopyTextField extends TextField {
             super.copy();
         } else {
             // copy formatted text
-            CommonUtils.putStringIntoClipboard(this.formattedText);
+            Utils.putStringIntoClipboard(this.formattedText);
         }
     }
 

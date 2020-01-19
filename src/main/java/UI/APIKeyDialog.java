@@ -1,3 +1,5 @@
+package UI;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -13,7 +15,7 @@ import javafx.util.Pair;
 import java.util.Optional;
 
 /***
- * APIKeyDialog.java
+ * UI.APIKeyDialog.java
  * shows a dialog to enter app ID and app key information.
  */
 public class APIKeyDialog {
@@ -125,7 +127,7 @@ public class APIKeyDialog {
 
         if (!stage.isShowing()) {
             Optional<Pair<String, String>> result = dialog.showAndWait();
-            result.ifPresent(idKey -> CommonUtils.createConfigFile(idKey.getKey(), idKey.getValue()));
+            result.ifPresent(idKey -> IO.Utils.createConfigFile(idKey.getKey(), idKey.getValue()));
         }
 
         stage.toFront();

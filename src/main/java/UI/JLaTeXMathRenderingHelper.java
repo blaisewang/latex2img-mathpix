@@ -1,4 +1,4 @@
-/*
+package UI;/*
  * Copyright 2013 Heaton Research, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +35,7 @@ import java.awt.Insets;
 import java.awt.image.BufferedImage;
 
 /**
- * JLaTeXMathRenderingHelper.java
+ * UI.JLaTeXMathRenderingHelper.java
  * Utility class used to render LaTeX formulas.
  */
 public class JLaTeXMathRenderingHelper {

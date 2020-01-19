@@ -1,3 +1,5 @@
+package IO;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import javafx.embed.swing.SwingFXUtils;
@@ -12,7 +14,7 @@ import java.util.concurrent.Callable;
 
 
 /**
- * Recognition.java
+ * IO.Recognition.java
  * implements Callable<T> for concurrent call.
  * It initialises a common JsonObject used for request with unchanged parameters.
  * Set the "src" value with base64 encoded clipboard image before each request.
@@ -23,7 +25,7 @@ public class Recognition implements Callable<Response> {
 
     /**
      * Original parameter explanation: https://docs.mathpix.com/
-     * Initialisation of the Recognition class and a JsonObject with unchanged parameters.
+     * Initialisation of the IO.Recognition class and a JsonObject with unchanged parameters.
      */
     public Recognition() {
 

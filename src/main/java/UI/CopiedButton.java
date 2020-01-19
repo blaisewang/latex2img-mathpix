@@ -1,3 +1,5 @@
+package UI;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
@@ -9,7 +11,7 @@ import javafx.scene.text.FontWeight;
 
 
 /**
- * CopiedButton.java
+ * UI.CopiedButton.java
  * javafx.scene.control.Button with customised border stroke and layout style.
  * Used to indicate which result has been copied.
  */

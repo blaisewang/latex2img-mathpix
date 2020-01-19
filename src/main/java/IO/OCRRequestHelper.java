@@ -1,3 +1,5 @@
+package IO;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpResponse;
@@ -17,25 +19,25 @@ import java.io.UnsupportedEncodingException;
 
 
 /**
- * OCRRequestHelper.java
+ * IO.OCRRequestHelper.java
  * handles the OCR request with HTTP post.
- * Parsing the result as a Response object.
+ * Parsing the result as a IO.Response object.
  */
 public class OCRRequestHelper {
 
     /**
      * Send the request with Json parameters to Mathpix API.
-     * Parsing the result as a Response object.
+     * Parsing the result as a IO.Response object.
      *
      * @param parameters JsonObject to send as the request parameters.
-     * @return a Response object.
+     * @return a IO.Response object.
      */
     public static Response getResult(JsonObject parameters) {
 
         String app_id;
         String app_key;
 
-        AppConfig appConfig = CommonUtils.readConfigFile();
+        AppConfig appConfig = Utils.readConfigFile();
 
         if (appConfig != null) {
             app_id = appConfig.getAppId();
@@ -47,7 +49,7 @@ public class OCRRequestHelper {
 
         // workaround to resolve #26
         SSLContext context = SSLContexts.createSystemDefault();
-        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, CommonUtils.SUPPORTED_PROTOCOLS, null, NoopHostnameVerifier.INSTANCE);
+        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, Utils.SUPPORTED_PROTOCOLS, null, NoopHostnameVerifier.INSTANCE);
 
         // maximum connection waiting time 10 seconds
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10000).build();

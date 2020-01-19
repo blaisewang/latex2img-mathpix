@@ -1,3 +1,5 @@
+package UI;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -26,7 +28,7 @@ import java.util.Properties;
 
 
 /**
- * MainAPP.java
+ * UI.MainAPP.java
  * Initialises main interface of the JavaFX application.
  * The primary stage will be initialised with 1 ImageView, 1 Button, 4 TextFields and 1 ProgressBar.
  * The app will add a tray icon to menu bar and set the window style as StageStyle.UTILITY.
@@ -53,7 +55,7 @@ public class MainAPP extends Application {
     public void start(Stage primaryStage) {
 
         // show API key dialog if config file does not exist
-        if (!CommonUtils.isConfigExists()) {
+        if (!IO.Utils.isConfigExists()) {
             showAPIKeyDialog();
         }
 
@@ -71,7 +73,7 @@ public class MainAPP extends Application {
             System.exit(0);
         }
 
-        // initialise scene with the BackGridPane
+        // initialise scene with the UI.BackGridPane
         Scene scene = new Scene(backGridPane);
 
         // enter key pressed event binding to the Scene
@@ -143,7 +145,7 @@ public class MainAPP extends Application {
         // macOS
         if (SystemUtils.IS_OS_MAC_OSX) {
             // dark mode
-            if (CommonUtils.isMacDarkMode()) {
+            if (Utils.isMacDarkMode()) {
                 // load the white colour icon
                 iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-mac-dark.png");
             } else {
@@ -178,7 +180,7 @@ public class MainAPP extends Application {
         settingItem.addActionListener(event -> Platform.runLater(this::showAPIKeyDialog));
 
         String currentVersion = properties.getProperty("version");
-        String latestVersion = CommonUtils.getLatestVersion();
+        String latestVersion = IO.Utils.getLatestVersion();
 
         // add check for updates menu item
         MenuItem updateCheckItem = new MenuItem("Check for Updates");
@@ -243,7 +245,7 @@ public class MainAPP extends Application {
      */
     private void showAPIKeyDialog() {
 
-        AppConfig appConfig = CommonUtils.readConfigFile();
+        IO.AppConfig appConfig = IO.Utils.readConfigFile();
         if (appConfig != null) {
             apiKeyDialog.setId(appConfig.getAppId());
             apiKeyDialog.setKey(appConfig.getAppKey());

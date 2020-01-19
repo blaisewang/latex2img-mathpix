@@ -1,5 +1,7 @@
+package IO;
+
 /**
- * AppConfig.java
+ * IO.AppConfig.java
  * used to store app_id and id_key.
  */
 public class AppConfig {

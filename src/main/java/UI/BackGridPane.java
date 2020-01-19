@@ -1,3 +1,5 @@
+package UI;
+
 import javafx.concurrent.Task;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -23,7 +25,7 @@ import java.time.Instant;
 
 
 /**
- * BackGridPane.java
+ * UI.BackGridPane.java
  * Used for display current clipboard image and confidence progressbar.
  * The back grid panel has 3 Labels, 2 ImageViews, 1 Button, and 1 ProgressBar.
  */
@@ -52,7 +54,7 @@ public class BackGridPane extends GridPane {
 
     private static FrontGridPane frontGridPane = new FrontGridPane(PREFERRED_MARGIN, PANE_BORDER_STROKE);
 
-    // get components from FrontGridPane instance
+    // get components from UI.FrontGridPane instance
     private static CopiedButton copiedButton = frontGridPane.getCopiedButton();
     private static PressCopyTextField latexStyledResult = frontGridPane.getLatexStyledResult();
     private static PressCopyTextField textResult = frontGridPane.getTextResult();
@@ -60,7 +62,7 @@ public class BackGridPane extends GridPane {
     private static PressCopyTextField numberedBlockModeResult = frontGridPane.getNumberedBlockModeResult();
 
     /**
-     * BackGridPane Initialisation.
+     * UI.BackGridPane Initialisation.
      */
     public BackGridPane() {
 
@@ -72,15 +74,15 @@ public class BackGridPane extends GridPane {
         this.setHgap(2);
 
         // add "Clipboard Image" text label
-        Label clipboardTextLabel = CommonUtils.getTextLabel("Clipboard Image");
-        CommonUtils.setDefaultNodeMargin(clipboardTextLabel, PREFERRED_MARGIN, 0);
+        Label clipboardTextLabel = Utils.getTextLabel("Clipboard Image");
+        Utils.setDefaultNodeMargin(clipboardTextLabel, PREFERRED_MARGIN, 0);
         this.add(clipboardTextLabel, 0, 0);
 
         waitingTextLabel.setFont(Font.font("Arial Black", FontWeight.BOLD, 12));
         waitingTextLabel.setTextFill(new Color(0.3882, 0.7882, 0.3373, 1));
         waitingTextLabel.setVisible(false);
         GridPane.setHalignment(waitingTextLabel, HPos.RIGHT);
-        CommonUtils.setDefaultNodeMargin(waitingTextLabel, 0, PREFERRED_MARGIN);
+        Utils.setDefaultNodeMargin(waitingTextLabel, 0, PREFERRED_MARGIN);
         this.add(waitingTextLabel, 1, 0);
 
         // get bordered ImageView
@@ -88,8 +90,8 @@ public class BackGridPane extends GridPane {
         this.add(clipboardBorderPane, 0, 1, 2, 1);
 
         // add "Rendered Equation" text label
-        Label renderedTextLabel = CommonUtils.getTextLabel("Rendered Equation");
-        CommonUtils.setDefaultNodeMargin(renderedTextLabel, PREFERRED_MARGIN, 0);
+        Label renderedTextLabel = Utils.getTextLabel("Rendered Equation");
+        Utils.setDefaultNodeMargin(renderedTextLabel, PREFERRED_MARGIN, 0);
         this.add(renderedTextLabel, 0, 2, 2, 1);
 
         // get bordered ImageView
@@ -126,16 +128,16 @@ public class BackGridPane extends GridPane {
         // add front grid panel
         this.add(frontGridPane, 0, 4, 2, 1);
 
-        // enter key pressed event binding to the FrontGridPane
+        // enter key pressed event binding to the UI.FrontGridPane
         this.onKeyReleasedProperty().bind(frontGridPane.onKeyReleasedProperty());
 
         // add "Confidence" label text
-        Label confidenceText = CommonUtils.getTextLabel("Confidence");
-        CommonUtils.setDefaultNodeMargin(confidenceText, PREFERRED_MARGIN, 0);
+        Label confidenceText = Utils.getTextLabel("Confidence");
+        Utils.setDefaultNodeMargin(confidenceText, PREFERRED_MARGIN, 0);
         this.add(confidenceText, 0, 5, 2, 1);
 
         // confidence progress bar
-        CommonUtils.setDefaultNodeMargin(confidenceProgressBar, PREFERRED_MARGIN, 0);
+        Utils.setDefaultNodeMargin(confidenceProgressBar, PREFERRED_MARGIN, 0);
         confidenceProgressBar.setPrefSize(PREFERRED_WIDTH - 2 * PREFERRED_MARGIN - 1, 20);
         // red for less than 20% certainty, yellow for 20% ~ 60%, and green for above 60%
         confidenceProgressBar.progressProperty().addListener((observable, oldValue, newValue) -> {
@@ -179,7 +181,7 @@ public class BackGridPane extends GridPane {
      */
     private void clearErrorImage() {
         // put empty string into the clipboard to avoid displaying the same error image again
-        CommonUtils.putStringIntoClipboard("");
+        Utils.putStringIntoClipboard("");
 
         // set empty image
         clipboardImageView.setImage(null);
@@ -220,10 +222,10 @@ public class BackGridPane extends GridPane {
             // show waiting label
             waitingTextLabel.setVisible(true);
 
-            Task<Response> task = new Task<>() {
+            Task<IO.Response> task = new Task<>() {
                 @Override
-                protected Response call() {
-                    return CommonUtils.concurrentCall(clipboardImageView.getImage());
+                protected IO.Response call() {
+                    return IO.Utils.concurrentCall(clipboardImageView.getImage());
                 }
             };
             task.setOnSucceeded(event -> {
@@ -231,7 +233,7 @@ public class BackGridPane extends GridPane {
                 // hide waiting label
                 waitingTextLabel.setVisible(false);
 
-                Response response = task.getValue();
+                IO.Response response = task.getValue();
 
                 // if response received
                 if (response != null) {
@@ -240,14 +242,14 @@ public class BackGridPane extends GridPane {
                         // clear error image and last results
                         clearErrorImage();
                         // show error content with a alert dialog
-                        CommonUtils.displayError(response.getError());
+                        Utils.displayError(response.getError());
 
                         return;
                     }
 
                     // put default result into the system clipboard
-                    CommonUtils.putStringIntoClipboard(response.getLatexStyled());
-                    // set CopiedButton to the corresponded location
+                    Utils.putStringIntoClipboard(response.getLatexStyled());
+                    // set UI.CopiedButton to the corresponded location
                     frontGridPane.setCopiedButtonRowIndex();
 
                     // set rendered image to renderedImageView
@@ -259,11 +261,11 @@ public class BackGridPane extends GridPane {
                     // no equation found in image
                     if (response.isNotMath()) {
                         // add $$ ... $$ wrapper, similar handling as Mathpix Snip
-                        notNumberedBlockModeResult.setFormattedText(CommonUtils.addDoubleDollarWrapper(response.getLatexStyled()));
+                        notNumberedBlockModeResult.setFormattedText(Utils.addDoubleDollarWrapper(response.getLatexStyled()));
                     } else {
                         notNumberedBlockModeResult.setFormattedText(response.getTextDisplay());
                     }
-                    numberedBlockModeResult.setFormattedText(CommonUtils.addEquationWrapper(response.getLatexStyled()));
+                    numberedBlockModeResult.setFormattedText(Utils.addEquationWrapper(response.getLatexStyled()));
 
                     double confidence = response.getLatexConfidence();
 
@@ -276,7 +278,7 @@ public class BackGridPane extends GridPane {
 
                 } else {
                     // no response received
-                    CommonUtils.displayError("Unexpected error occurred");
+                    Utils.displayError("Unexpected error occurred");
                     clearErrorImage();
                 }
 
@@ -286,7 +288,7 @@ public class BackGridPane extends GridPane {
         } else {
 
             // no image in the system clipboard
-            CommonUtils.displayError("No image found in the clipboard");
+            Utils.displayError("No image found in the clipboard");
 
         }
 

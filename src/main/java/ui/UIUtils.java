@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * UI.CommonUtils.java
  * Contains common UI methods.
  */
-public class Utils {
+public class UIUtils {
 
     /**
      * Original source: https://stackoverflow.com/a/33477375/4658633

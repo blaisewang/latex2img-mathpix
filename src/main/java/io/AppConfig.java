@@ -1,4 +1,4 @@
-package IO;
+package io;
 
 /**
  * IO.AppConfig.java

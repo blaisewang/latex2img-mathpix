@@ -1,4 +1,4 @@
-package IO;
+package io;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -37,7 +37,7 @@ public class OCRRequestHelper {
         String app_id;
         String app_key;
 
-        AppConfig appConfig = Utils.readConfigFile();
+        AppConfig appConfig = IOUtils.readConfigFile();
 
         if (appConfig != null) {
             app_id = appConfig.getAppId();
@@ -49,7 +49,7 @@ public class OCRRequestHelper {
 
         // workaround to resolve #26
         SSLContext context = SSLContexts.createSystemDefault();
-        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, Utils.SUPPORTED_PROTOCOLS, null, NoopHostnameVerifier.INSTANCE);
+        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, IOUtils.SUPPORTED_PROTOCOLS, null, NoopHostnameVerifier.INSTANCE);
 
         // maximum connection waiting time 10 seconds
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10000).build();

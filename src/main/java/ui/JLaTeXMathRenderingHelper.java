@@ -1,4 +1,4 @@
-package UI;/*
+package ui;/*
  * Copyright 2013 Heaton Research, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

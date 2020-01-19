@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -51,7 +51,7 @@ public class PressCopyTextField extends TextField {
         this.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             if (getLength() > 0) {
                 // copy text if there is text
-                Utils.putStringIntoClipboard(this.formattedText);
+                UIUtils.putStringIntoClipboard(this.formattedText);
             }
         });
 
@@ -79,7 +79,7 @@ public class PressCopyTextField extends TextField {
             super.copy();
         } else {
             // copy formatted text
-            Utils.putStringIntoClipboard(this.formattedText);
+            UIUtils.putStringIntoClipboard(this.formattedText);
         }
     }
 

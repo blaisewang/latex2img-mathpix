@@ -1,5 +1,6 @@
-package UI;
+package ui;
 
+import io.IOUtils;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -55,7 +56,7 @@ public class MainAPP extends Application {
     public void start(Stage primaryStage) {
 
         // show API key dialog if config file does not exist
-        if (!IO.Utils.isConfigExists()) {
+        if (!IOUtils.isConfigExists()) {
             showAPIKeyDialog();
         }
 
@@ -145,7 +146,7 @@ public class MainAPP extends Application {
         // macOS
         if (SystemUtils.IS_OS_MAC_OSX) {
             // dark mode
-            if (Utils.isMacDarkMode()) {
+            if (UIUtils.isMacDarkMode()) {
                 // load the white colour icon
                 iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-mac-dark.png");
             } else {
@@ -180,7 +181,7 @@ public class MainAPP extends Application {
         settingItem.addActionListener(event -> Platform.runLater(this::showAPIKeyDialog));
 
         String currentVersion = properties.getProperty("version");
-        String latestVersion = IO.Utils.getLatestVersion();
+        String latestVersion = IOUtils.getLatestVersion();
 
         // add check for updates menu item
         MenuItem updateCheckItem = new MenuItem("Check for Updates");
@@ -245,7 +246,7 @@ public class MainAPP extends Application {
      */
     private void showAPIKeyDialog() {
 
-        IO.AppConfig appConfig = IO.Utils.readConfigFile();
+        io.AppConfig appConfig = IOUtils.readConfigFile();
         if (appConfig != null) {
             apiKeyDialog.setId(appConfig.getAppId());
             apiKeyDialog.setKey(appConfig.getAppKey());

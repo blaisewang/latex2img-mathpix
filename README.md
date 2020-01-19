@@ -37,7 +37,7 @@ To change your API keys, macOS and Windows users will find a menu item called `A
 Linux users need to change it manually by finding the `config` file and edit it by text editor.
 
 **Do not share your `config` file with others.**
-This app will also not send your API keys to others except for MathpixOCR API server (see OCRRequestHelper.java](https://github.com/blaisewang/img2latex-mathpix/blob/master/src/main/java/IO/OCRRequestHelper.java) to learn how your API keys are used).
+This app will also not send your API keys to others except for MathpixOCR API server (see [OCRRequestHelper.java](https://github.com/blaisewang/img2latex-mathpix/blob/master/src/main/java/io/OCRRequestHelper.java) to learn how your API keys are used).
 
 ## Usage
 

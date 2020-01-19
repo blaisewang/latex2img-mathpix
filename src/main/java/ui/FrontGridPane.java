@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -43,32 +43,32 @@ public class FrontGridPane extends GridPane {
         this.setHgap(2);
 
         // add "Result" textL label
-        Label resultTextLabel = Utils.getTextLabel("Result");
-        Utils.setDefaultNodeMargin(resultTextLabel, itemMargin, 0);
+        Label resultTextLabel = UIUtils.getTextLabel("Result");
+        UIUtils.setDefaultNodeMargin(resultTextLabel, itemMargin, 0);
         this.add(resultTextLabel, 0, 0);
 
         // used to indicate which result on the left side has been copied, default invisible
         copiedButton.setVisible(false);
-        Utils.setDefaultNodeMargin(copiedButton, itemMargin / 2, 0);
+        UIUtils.setDefaultNodeMargin(copiedButton, itemMargin / 2, 0);
         this.add(copiedButton, 1, 1);
 
         // add latexStyledResult
-        Utils.setDefaultNodeMargin(latexStyledResult, itemMargin, 0);
+        UIUtils.setDefaultNodeMargin(latexStyledResult, itemMargin, 0);
         setTextFieldEvent(latexStyledResult, 1);
         this.add(latexStyledResult, 0, 1);
 
         // add textResult
-        Utils.setDefaultNodeMargin(textResult, itemMargin, 0);
+        UIUtils.setDefaultNodeMargin(textResult, itemMargin, 0);
         setTextFieldEvent(textResult, 2);
         this.add(textResult, 0, 2);
 
         // add notNumberedBlockModeResult
-        Utils.setDefaultNodeMargin(notNumberedBlockModeResult, itemMargin, 0);
+        UIUtils.setDefaultNodeMargin(notNumberedBlockModeResult, itemMargin, 0);
         setTextFieldEvent(notNumberedBlockModeResult, 3);
         this.add(notNumberedBlockModeResult, 0, 3);
 
         // add numberedBlockModeResult
-        Utils.setDefaultNodeMargin(numberedBlockModeResult, itemMargin, 0);
+        UIUtils.setDefaultNodeMargin(numberedBlockModeResult, itemMargin, 0);
         setTextFieldEvent(numberedBlockModeResult, 4);
         this.add(numberedBlockModeResult, 0, 4);
 

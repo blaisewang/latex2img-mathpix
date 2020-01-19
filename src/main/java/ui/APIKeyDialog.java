@@ -1,5 +1,6 @@
-package UI;
+package ui;
 
+import io.IOUtils;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -127,7 +128,7 @@ public class APIKeyDialog {
 
         if (!stage.isShowing()) {
             Optional<Pair<String, String>> result = dialog.showAndWait();
-            result.ifPresent(idKey -> IO.Utils.createConfigFile(idKey.getKey(), idKey.getValue()));
+            result.ifPresent(idKey -> IOUtils.createConfigFile(idKey.getKey(), idKey.getValue()));
         }
 
         stage.toFront();

@@ -1,4 +1,4 @@
-package IO;
+package io;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -29,7 +29,7 @@ import java.util.concurrent.Future;
  * IO.CommonUtils.java
  * Contains common IO methods.
  */
-public class Utils {
+public class IOUtils {
 
     private static Path configFilePath = Paths.get("./config");
 

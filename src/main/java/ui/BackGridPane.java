@@ -1,5 +1,6 @@
-package UI;
+package ui;
 
+import io.IOUtils;
 import javafx.concurrent.Task;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -74,15 +75,15 @@ public class BackGridPane extends GridPane {
         this.setHgap(2);
 
         // add "Clipboard Image" text label
-        Label clipboardTextLabel = Utils.getTextLabel("Clipboard Image");
-        Utils.setDefaultNodeMargin(clipboardTextLabel, PREFERRED_MARGIN, 0);
+        Label clipboardTextLabel = UIUtils.getTextLabel("Clipboard Image");
+        UIUtils.setDefaultNodeMargin(clipboardTextLabel, PREFERRED_MARGIN, 0);
         this.add(clipboardTextLabel, 0, 0);
 
         waitingTextLabel.setFont(Font.font("Arial Black", FontWeight.BOLD, 12));
         waitingTextLabel.setTextFill(new Color(0.3882, 0.7882, 0.3373, 1));
         waitingTextLabel.setVisible(false);
         GridPane.setHalignment(waitingTextLabel, HPos.RIGHT);
-        Utils.setDefaultNodeMargin(waitingTextLabel, 0, PREFERRED_MARGIN);
+        UIUtils.setDefaultNodeMargin(waitingTextLabel, 0, PREFERRED_MARGIN);
         this.add(waitingTextLabel, 1, 0);
 
         // get bordered ImageView
@@ -90,8 +91,8 @@ public class BackGridPane extends GridPane {
         this.add(clipboardBorderPane, 0, 1, 2, 1);
 
         // add "Rendered Equation" text label
-        Label renderedTextLabel = Utils.getTextLabel("Rendered Equation");
-        Utils.setDefaultNodeMargin(renderedTextLabel, PREFERRED_MARGIN, 0);
+        Label renderedTextLabel = UIUtils.getTextLabel("Rendered Equation");
+        UIUtils.setDefaultNodeMargin(renderedTextLabel, PREFERRED_MARGIN, 0);
         this.add(renderedTextLabel, 0, 2, 2, 1);
 
         // get bordered ImageView
@@ -132,12 +133,12 @@ public class BackGridPane extends GridPane {
         this.onKeyReleasedProperty().bind(frontGridPane.onKeyReleasedProperty());
 
         // add "Confidence" label text
-        Label confidenceText = Utils.getTextLabel("Confidence");
-        Utils.setDefaultNodeMargin(confidenceText, PREFERRED_MARGIN, 0);
+        Label confidenceText = UIUtils.getTextLabel("Confidence");
+        UIUtils.setDefaultNodeMargin(confidenceText, PREFERRED_MARGIN, 0);
         this.add(confidenceText, 0, 5, 2, 1);
 
         // confidence progress bar
-        Utils.setDefaultNodeMargin(confidenceProgressBar, PREFERRED_MARGIN, 0);
+        UIUtils.setDefaultNodeMargin(confidenceProgressBar, PREFERRED_MARGIN, 0);
         confidenceProgressBar.setPrefSize(PREFERRED_WIDTH - 2 * PREFERRED_MARGIN - 1, 20);
         // red for less than 20% certainty, yellow for 20% ~ 60%, and green for above 60%
         confidenceProgressBar.progressProperty().addListener((observable, oldValue, newValue) -> {
@@ -181,7 +182,7 @@ public class BackGridPane extends GridPane {
      */
     private void clearErrorImage() {
         // put empty string into the clipboard to avoid displaying the same error image again
-        Utils.putStringIntoClipboard("");
+        UIUtils.putStringIntoClipboard("");
 
         // set empty image
         clipboardImageView.setImage(null);
@@ -222,10 +223,10 @@ public class BackGridPane extends GridPane {
             // show waiting label
             waitingTextLabel.setVisible(true);
 
-            Task<IO.Response> task = new Task<>() {
+            Task<io.Response> task = new Task<>() {
                 @Override
-                protected IO.Response call() {
-                    return IO.Utils.concurrentCall(clipboardImageView.getImage());
+                protected io.Response call() {
+                    return IOUtils.concurrentCall(clipboardImageView.getImage());
                 }
             };
             task.setOnSucceeded(event -> {
@@ -233,7 +234,7 @@ public class BackGridPane extends GridPane {
                 // hide waiting label
                 waitingTextLabel.setVisible(false);
 
-                IO.Response response = task.getValue();
+                io.Response response = task.getValue();
 
                 // if response received
                 if (response != null) {
@@ -242,13 +243,13 @@ public class BackGridPane extends GridPane {
                         // clear error image and last results
                         clearErrorImage();
                         // show error content with a alert dialog
-                        Utils.displayError(response.getError());
+                        UIUtils.displayError(response.getError());
 
                         return;
                     }
 
                     // put default result into the system clipboard
-                    Utils.putStringIntoClipboard(response.getLatexStyled());
+                    UIUtils.putStringIntoClipboard(response.getLatexStyled());
                     // set UI.CopiedButton to the corresponded location
                     frontGridPane.setCopiedButtonRowIndex();
 
@@ -261,11 +262,11 @@ public class BackGridPane extends GridPane {
                     // no equation found in image
                     if (response.isNotMath()) {
                         // add $$ ... $$ wrapper, similar handling as Mathpix Snip
-                        notNumberedBlockModeResult.setFormattedText(Utils.addDoubleDollarWrapper(response.getLatexStyled()));
+                        notNumberedBlockModeResult.setFormattedText(UIUtils.addDoubleDollarWrapper(response.getLatexStyled()));
                     } else {
                         notNumberedBlockModeResult.setFormattedText(response.getTextDisplay());
                     }
-                    numberedBlockModeResult.setFormattedText(Utils.addEquationWrapper(response.getLatexStyled()));
+                    numberedBlockModeResult.setFormattedText(UIUtils.addEquationWrapper(response.getLatexStyled()));
 
                     double confidence = response.getLatexConfidence();
 
@@ -278,7 +279,7 @@ public class BackGridPane extends GridPane {
 
                 } else {
                     // no response received
-                    Utils.displayError("Unexpected error occurred");
+                    UIUtils.displayError("Unexpected error occurred");
                     clearErrorImage();
                 }
 
@@ -288,7 +289,7 @@ public class BackGridPane extends GridPane {
         } else {
 
             // no image in the system clipboard
-            Utils.displayError("No image found in the clipboard");
+            UIUtils.displayError("No image found in the clipboard");
 
         }
 

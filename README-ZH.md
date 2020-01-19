@@ -38,7 +38,7 @@ macOS 和 Windows 用户可以在系统托盘找到 `API Key` 选项来修改你
 Linux 用户需要首先找到 `config` 文件，再通过文本编辑器进行修改。
 
 **不要与其他人分享你的 `config` 文件。**
-这款应用同样也不会将你的 API keys 发送给除 MathpixOCR API 服务器之外的任何人（查看 [OCRRequestHelper.java](https://github.com/blaisewang/img2latex-mathpix/blob/master/src/main/java/IO/OCRRequestHelper.java) 了解你的 API keys 是如何被使用的）。
+这款应用同样也不会将你的 API keys 发送给除 MathpixOCR API 服务器之外的任何人（查看 [OCRRequestHelper.java](https://github.com/blaisewang/img2latex-mathpix/blob/master/src/main/java/io/OCRRequestHelper.java) 了解你的 API keys 是如何被使用的）。
 
 ## 使用
 

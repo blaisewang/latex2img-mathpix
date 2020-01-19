@@ -1,4 +1,4 @@
-package IO;
+package io;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

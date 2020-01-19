@@ -1,3 +1,4 @@
+import io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
 
 import java.awt.*;
@@ -18,14 +19,14 @@ public class Main {
 
         if (SystemUtils.IS_OS_MAC_OSX) {
             // set config file path
-            IO.Utils.setConfigFilePath();
+            IOUtils.setConfigFilePath();
             // hide icon in the Dock of macOS
             System.setProperty("apple.awt.UIElement", "true");
             Toolkit.getDefaultToolkit();
         }
 
         // run JavaFX application
-        UI.MainAPP.main(args);
+        ui.MainAPP.main(args);
 
     }
 

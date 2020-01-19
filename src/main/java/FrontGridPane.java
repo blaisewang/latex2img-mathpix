@@ -122,7 +122,7 @@ public class FrontGridPane extends GridPane {
     /**
      * @return numbered block mode result TextField.
      */
-    PressCopyTextField getNumberedBlockModeResult() {
+    public PressCopyTextField getNumberedBlockModeResult() {
         return numberedBlockModeResult;
     }
 

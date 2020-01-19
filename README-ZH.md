@@ -22,13 +22,12 @@ Image2LaTeX 是空闲时间的个人项目，仅保留了 Snip 的核心功能�
 
 ### 新功能
 
-- 适用于 macOS 的独立可执行应用程序.
+  - 适用于 macOS 的独立可执行应用程序.
 
 ## 使用要求
 
-- [MathpixOCR 控制台](https://dashboard.mathpix.com/) 中的 API keys（与 Snip 不是同一个账号体系）。
-
-- 如果你打算使用 `Image2LaTeX-x.x.x.jar` 请安装 JDK 11 或更高版本（推荐使用 [OpenJDK](https://openjdk.java.net/)。
+  - [MathpixOCR 控制台](https://dashboard.mathpix.com/) 中的 API keys（与 Snip 不是同一个账号体系）。
+  - 如果你打算使用 `Image2LaTeX-x.x.x.jar` 请安装 JDK 11 或更高版本（推荐使用 [OpenJDK](https://openjdk.java.net/)。
 
 ## 运行
 
@@ -78,33 +77,29 @@ java -jar Image2LaTeX-x.x.x.jar
 
 ## 常见问题
 
-### Windows 和 Linux 没有独立可执行程序提供？
+### Windows 和 Linux 平台的独立可执行程序
 
 2020 年 Java 14 GA 发布之后，会使用 [jpackage](https://jdk.java.net/jpackage/) 重新打包发布。
 
-### 为什么有三种版本的程序可以下载？我应该下载哪一个？
+### `*.jar` 和 `*.zip` 版本的区别
 
-`Image2LaTeX.app` 仅适用于macOS。
-
-`Image2LaTeX-x.x.x-windows.zip` 和 `Image2LaTeX-x.x.x-linux.zip` 是由 [Badass Runtime Plugin](https://badass-runtime-plugin.beryx.org/releases/latest/) 编译的，体积庞大。
-
-以上版本不需要安装 JDK 11 即可使用。
+`*.zip` 版本不需要安装 JDK 11 即可使用。
 
 考虑到使用这类应用的用户群体，可能有很大一部分已经安装了 JDK ，所以发布了体积更小的 `Image2LaTeX-x.x.x.jar` 版本。
 
-### 想要第一时间知道新版本的发布？
+### 第一时间获取新版本的发布
 
 查看GitHub这篇关于关注和取消关注仓库的发行版的[文章](https://help.github.com/cn/github/receiving-notifications-about-activity-on-github/watching-and-unwatching-releases-for-a-repository)。
 
-### 开发计划？
+### 开发计划
 
-- 为特定 Linux 发行版添加系统托盘图标的支持。
+  - 为特定 Linux 发行版添加系统托盘图标的支持。
 
 ## 问题
 
 当出现错误对话框时，请先阅读 Mathpix OCR [API 文档](https://docs.mathpix.com/#error-id-types) 中关于 Error Types 章节。
 
-### 还有问题 :thinking: ？
+### 遇到了尚未报告的问题 :thinking:
 
 欢迎使用 [bug](https://github.com/blaisewang/img2latex-mathpix/labels/bug) 或者 [question](https://github.com/blaisewang/img2latex-mathpix/labels/question) 标签提出 [issue](https://github.com/blaisewang/img2latex-mathpix/issues) ， 但是非紧急问题的修复时间无法保证.
 

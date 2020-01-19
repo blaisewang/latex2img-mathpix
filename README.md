@@ -2,6 +2,7 @@
 
 English | [中文](https://github.com/blaisewang/img2latex-mathpix/blob/master/README-ZH.md#readme)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/72ad532d6b474d4fa0ec3fec40959212)](https://app.codacy.com/manual/blaisewang/img2latex-mathpix?utm_source=github.com&utm_medium=referral&utm_content=blaisewang/img2latex-mathpix&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://img.shields.io/travis/com/blaisewang/img2latex-mathpix/master?style=flat-square)](https://travis-ci.com/blaisewang/img2latex-mathpix)
 [![Releases](https://img.shields.io/github/v/release/blaisewang/img2latex-mathpix?include_prereleases&style=flat-square)](https://github.com/blaisewang/img2latex-mathpix/releases)
 [![Downloads](https://img.shields.io/github/downloads/blaisewang/img2latex-mathpix/total?color=orange&style=flat-square)](https://github.com/blaisewang/img2latex-mathpix/releases)

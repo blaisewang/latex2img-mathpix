@@ -15,7 +15,7 @@ public class Response {
     private double latex_confidence;
     private ArrayList<String> detection_list;
 
-    private Response(String error, String text, String text_display, String latex_styled, double latex_confidence, ArrayList<String> detection_list) {
+    public Response(String error, String text, String text_display, String latex_styled, double latex_confidence, ArrayList<String> detection_list) {
 
         this.error = error;
         this.text = text;

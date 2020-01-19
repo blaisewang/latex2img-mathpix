@@ -1,6 +1,11 @@
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 
@@ -9,7 +14,7 @@ import javafx.scene.paint.Color;
  * Used for display recognised results.
  * The front grid panel has 1 Label, 1 CopiedButton and 4 PressCopyTextFields.
  */
-class FrontGridPane extends GridPane {
+public class FrontGridPane extends GridPane {
 
     private static CopiedButton copiedButton = new CopiedButton("COPIED");
     private static PressCopyTextField latexStyledResult = new PressCopyTextField();
@@ -25,7 +30,7 @@ class FrontGridPane extends GridPane {
      * @param itemMargin   margin between items.
      * @param borderStroke customised border stroke, same as in BackGridPane.
      */
-    FrontGridPane(int itemMargin, BorderStroke borderStroke) {
+    public FrontGridPane(int itemMargin, BorderStroke borderStroke) {
 
         this.setBorder(new Border(borderStroke));
         this.setBackground(frontPaneBackground);
@@ -68,10 +73,10 @@ class FrontGridPane extends GridPane {
     }
 
     /**
-     * Method to add a click event to a PressCopyTextField
+     * Method to add a click event to a PressCopyTextField.
      *
-     * @param textField TextField to add the click event
-     * @param rowIndex  row index of CopiedButton showed
+     * @param textField TextField to add the click event.
+     * @param rowIndex  row index of CopiedButton showed.
      */
     private void setTextFieldEvent(PressCopyTextField textField, int rowIndex) {
 
@@ -89,28 +94,28 @@ class FrontGridPane extends GridPane {
     /**
      * @return CopiedButton object used to be controlled by BackGridPane event.
      */
-    CopiedButton getCopiedButton() {
+    public CopiedButton getCopiedButton() {
         return copiedButton;
     }
 
     /**
      * @return LaTeX styled result TextField.
      */
-    PressCopyTextField getLatexStyledResult() {
+    public PressCopyTextField getLatexStyledResult() {
         return latexStyledResult;
     }
 
     /**
      * @return text result TextField.
      */
-    PressCopyTextField getTextResult() {
+    public PressCopyTextField getTextResult() {
         return textResult;
     }
 
     /**
      * @return not numbered block mode result TextField.
      */
-    PressCopyTextField getNotNumberedBlockModeResult() {
+    public PressCopyTextField getNotNumberedBlockModeResult() {
         return notNumberedBlockModeResult;
     }
 
@@ -122,9 +127,9 @@ class FrontGridPane extends GridPane {
     }
 
     /**
-     * Method to set the row index of CopiedButton in BackGridPane
+     * Method to set the row index of CopiedButton in BackGridPane.
      */
-    void setCopiedButtonRowIndex() {
+    public void setCopiedButtonRowIndex() {
         copiedButton.setVisible(true);
         GridPane.setRowIndex(copiedButton, 1);
     }

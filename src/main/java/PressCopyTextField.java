@@ -1,6 +1,10 @@
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -10,7 +14,7 @@ import javafx.scene.text.Font;
  * Extension of javafx.scene.control.TextField.
  * With customised border stroke and click-to-copy function.
  */
-class PressCopyTextField extends TextField {
+public class PressCopyTextField extends TextField {
 
     // variable to keep the original text format such as "\n"
     private String formattedText = "";
@@ -20,7 +24,7 @@ class PressCopyTextField extends TextField {
     private static final BorderWidths BORDER_WIDTHS = new BorderWidths(1, 1, 1, 1);
     private static final BorderStroke BORDER_STROKE = new BorderStroke(COLOR, BorderStrokeStyle.SOLID, CORNER_RADII, BORDER_WIDTHS);
 
-    PressCopyTextField() {
+    public PressCopyTextField() {
 
         this.setPrefWidth(220);
         this.setPrefHeight(20);
@@ -54,7 +58,7 @@ class PressCopyTextField extends TextField {
     /**
      * @param text text to be displayed and copied.
      */
-    final void setFormattedText(String text) {
+    public final void setFormattedText(String text) {
         // display text without formatted by the supertype method
         this.setText(text);
         // store the formatted text in this object

@@ -21,7 +21,7 @@ import java.io.UnsupportedEncodingException;
  * handles the OCR request with HTTP post.
  * Parsing the result as a Response object.
  */
-class OCRRequest {
+public class OCRRequest {
 
     /**
      * Send the request with Json parameters to Mathpix API.
@@ -30,7 +30,7 @@ class OCRRequest {
      * @param parameters JsonObject to send as the request parameters.
      * @return a Response object.
      */
-    static Response getResult(JsonObject parameters) {
+    public static Response getResult(JsonObject parameters) {
 
         String app_id;
         String app_key;
@@ -38,8 +38,8 @@ class OCRRequest {
         AppConfig appConfig = Utilities.readConfigFile();
 
         if (appConfig != null) {
-            app_id = appConfig.getApp_id();
-            app_key = appConfig.getApp_key();
+            app_id = appConfig.getAppId();
+            app_key = appConfig.getAppKey();
         } else {
             // early return
             return null;

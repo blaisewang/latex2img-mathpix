@@ -9,7 +9,13 @@ import javafx.stage.StageStyle;
 import org.apache.commons.lang3.SystemUtils;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.AWTException;
+import java.awt.Desktop;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +53,7 @@ public class MainAPP extends Application {
     public void start(Stage primaryStage) {
 
         // show API key dialog if config file does not exist
-        if (!Utilities.configFileExists()) {
+        if (!Utilities.isConfigExists()) {
             showAPIKeyDialog();
         }
 
@@ -59,7 +65,7 @@ public class MainAPP extends Application {
 
         try {
             // call add icon to menu bar method, get a boolean result
-            hasAddIconToTray = addIconToMenuBar();
+            hasAddIconToTray = addTrayIcon();
         } catch (IOException | AWTException e) {
             Platform.exit();
             System.exit(0);
@@ -122,7 +128,7 @@ public class MainAPP extends Application {
      * @throws IOException  if the icon resources cannot be loaded.
      * @throws AWTException if the icon cannot be correctly added to the system menu bar.
      */
-    private Boolean addIconToMenuBar() throws IOException, AWTException {
+    private Boolean addTrayIcon() throws IOException, AWTException {
 
         // initialise the AWT toolkit
         Toolkit.getDefaultToolkit();
@@ -177,11 +183,9 @@ public class MainAPP extends Application {
         // add check for updates menu item
         MenuItem updateCheckItem = new MenuItem("Check for Updates");
 
-        if (latestVersion != null) {
+        if (latestVersion != null && !latestVersion.equals(currentVersion)) {
             // new version found
-            if (!latestVersion.equals(currentVersion)) {
-                updateCheckItem.setLabel("New Version: " + latestVersion);
-            }
+            updateCheckItem.setLabel("New Version: " + latestVersion);
         }
 
         // add click action listener
@@ -241,8 +245,8 @@ public class MainAPP extends Application {
 
         AppConfig appConfig = Utilities.readConfigFile();
         if (appConfig != null) {
-            apiKeyDialog.idTextField.setText(appConfig.getApp_id());
-            apiKeyDialog.keyTextField.setText(appConfig.getApp_key());
+            apiKeyDialog.setId(appConfig.getAppId());
+            apiKeyDialog.setKey(appConfig.getAppKey());
         }
 
         apiKeyDialog.show();
@@ -250,9 +254,9 @@ public class MainAPP extends Application {
     }
 
     /**
-     * Launch JavaFx application
+     * Launch JavaFx application.
      *
-     * @param args command line arguments
+     * @param args command line arguments.
      */
     public static void main(String[] args) throws IOException {
 

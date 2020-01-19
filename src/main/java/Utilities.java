@@ -34,7 +34,7 @@ import java.util.concurrent.*;
  * Utilities.java
  * Contains common methods used across the project.
  */
-class Utilities {
+public class Utilities {
 
     // Recognition object initialisation
     private static Recognition recognition = new Recognition();
@@ -48,7 +48,7 @@ class Utilities {
      *
      * @return if macOS enabled dark mode.
      */
-    static boolean isMacDarkMode() {
+    public static boolean isMacDarkMode() {
 
         try {
             // process will exit with 0 if dark mode enabled
@@ -62,9 +62,11 @@ class Utilities {
     }
 
     /**
+     * Put text into clipboard.
+     *
      * @param text the recognised result to be put into clipboard.
      */
-    static void putStringIntoClipboard(String text) {
+    public static void putStringIntoClipboard(String text) {
 
         ClipboardContent content = new ClipboardContent();
         content.putString(text);
@@ -78,7 +80,7 @@ class Utilities {
      * @param image image to be recognised.
      * @return recognised result.
      */
-    static Response concurrentCall(Image image) {
+    public static Response concurrentCall(Image image) {
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
@@ -100,7 +102,7 @@ class Utilities {
      *
      * @return latest released version.
      */
-    static String getLatestVersion() {
+    public static String getLatestVersion() {
 
         // workaround to resolve #26
         SSLContext context = SSLContexts.createSystemDefault();
@@ -144,7 +146,7 @@ class Utilities {
      * @param left  left margin
      * @param right right margin
      */
-    static void setDefaultNodeMargin(Node node, int left, int right) {
+    public static void setDefaultNodeMargin(Node node, int left, int right) {
         GridPane.setMargin(node, new Insets(0, right, 5, left));
     }
 
@@ -154,7 +156,7 @@ class Utilities {
      * @param text text to be displayed
      * @return a customised Label
      */
-    static Label getTextLabel(String text) {
+    public static Label getTextLabel(String text) {
         Label label = new Label(text);
         // set font size
         label.setFont(Font.font(12));
@@ -167,14 +169,14 @@ class Utilities {
     /**
      * Set config file path.
      */
-    static void setConfigFilePath() {
+    public static void setConfigFilePath() {
         configFilePath = Paths.get(System.getProperty("user.home") + "/Library/Image2LaTeX/config");
     }
 
     /**
-     * @return config file exists
+     * @return if the config file exists.
      */
-    static Boolean configFileExists() {
+    public static Boolean isConfigExists() {
         return Files.exists(configFilePath);
     }
 
@@ -184,13 +186,13 @@ class Utilities {
      * @param appID  APP ID to be written.
      * @param appKey APP key to be written.
      */
-    static void createConfigFile(String appID, String appKey) {
+    public static void createConfigFile(String appID, String appKey) {
 
         String text = appID + System.lineSeparator() + appKey;
 
         try {
             // create one if not exists
-            if (!configFileExists()) {
+            if (!isConfigExists()) {
                 Files.createDirectories(configFilePath.getParent());
                 Files.createFile(configFilePath);
             }
@@ -207,7 +209,7 @@ class Utilities {
      *
      * @return AppConfig object.
      */
-    static AppConfig readConfigFile() {
+    public static AppConfig readConfigFile() {
 
         try {
             // read config file
@@ -224,7 +226,7 @@ class Utilities {
      *
      * @param error error message to be displayed.
      */
-    static void displayError(String error) {
+    public static void displayError(String error) {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -245,7 +247,7 @@ class Utilities {
      * @param originalResult recognised result.
      * @return recognised result with $$ wrapped.
      */
-    static String addDoubleDollarWrapper(String originalResult) {
+    public static String addDoubleDollarWrapper(String originalResult) {
         // return null if the original result is null
         return originalResult == null ? null : "$$\n " + originalResult + " \n$$";
     }
@@ -256,7 +258,7 @@ class Utilities {
      * @param originalResult recognised result.
      * @return recognised result with {equation} wrapped.
      */
-    static String addEquationWrapper(String originalResult) {
+    public static String addEquationWrapper(String originalResult) {
         // return null if the original result is null
         return originalResult == null ? null : "\\begin{equation}\n " + originalResult + " \n\\end{equation}";
     }

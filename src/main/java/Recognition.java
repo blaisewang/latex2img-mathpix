@@ -25,7 +25,7 @@ public class Recognition implements Callable<Response> {
      * Original parameter explanation: https://docs.mathpix.com/
      * Initialisation of the Recognition class and a JsonObject with unchanged parameters.
      */
-    Recognition() {
+    public Recognition() {
 
         // "src" initialises with empty string
         parameters.addProperty("src", "");
@@ -103,7 +103,7 @@ public class Recognition implements Callable<Response> {
      * @param image Image to be recognised.
      * @return if the parameter set is successful.
      */
-    Boolean setSrcParameters(Image image) {
+    public Boolean setSrcParameters(Image image) {
 
         // output stream in byte array
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

@@ -6,7 +6,15 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -19,7 +27,7 @@ import java.time.Instant;
  * Used for display current clipboard image and confidence progressbar.
  * The back grid panel has 3 Labels, 2 ImageViews, 1 Button, and 1 ProgressBar.
  */
-class BackGridPane extends GridPane {
+public class BackGridPane extends GridPane {
 
     private static final int PREFERRED_WIDTH = 300;
     private static final int PREFERRED_HEIGHT = 100;
@@ -32,8 +40,8 @@ class BackGridPane extends GridPane {
 
     private final Clipboard clipboard = Clipboard.getSystemClipboard();
 
-    private static long lastUpdateCompletionTimestamp = Instant.now().getEpochSecond();
-    private static long lastRequestCompletionTimestamp = Instant.now().getEpochSecond();
+    private long lastUpdateCompletionTimestamp = Instant.now().getEpochSecond();
+    private long lastRequestCompletionTimestamp = Instant.now().getEpochSecond();
 
     private static final Color PANE_BORDER_COLOR = new Color(0.898, 0.902, 0.9216, 1);
     private static final BorderWidths PANE_BORDER_WIDTHS = new BorderWidths(1, 0, 1, 0);
@@ -54,7 +62,7 @@ class BackGridPane extends GridPane {
     /**
      * BackGridPane Initialisation.
      */
-    BackGridPane() {
+    public BackGridPane() {
 
         this.setPadding(new Insets(PREFERRED_MARGIN, 0, PREFERRED_MARGIN, 0));
         this.setBackground(BACKGROUND);
@@ -144,10 +152,10 @@ class BackGridPane extends GridPane {
     }
 
     /**
-     * Method to set ImageView style and add a BorderPane for border plotting
+     * Method to set ImageView style and add a BorderPane for border plotting.
      *
-     * @param imageView ImageView to be customised
-     * @return customised ImageView with BorderPane
+     * @param imageView ImageView to be customised.
+     * @return customised ImageView with BorderPane.
      */
     private BorderPane setImageViewBorder(ImageView imageView) {
         // preserve image ratio
@@ -167,7 +175,7 @@ class BackGridPane extends GridPane {
     }
 
     /**
-     * Method to clear error image and last recognition results
+     * Method to clear error image and last recognition results.
      */
     private void clearErrorImage() {
         // put empty string into the clipboard to avoid displaying the same error image again
@@ -190,7 +198,7 @@ class BackGridPane extends GridPane {
     /**
      * OCR request handler.
      */
-    void requestHandler() {
+    private void requestHandler() {
 
         // prevent multiple OCR requests from being sent in a short time
         if (Instant.now().getEpochSecond() - lastRequestCompletionTimestamp < 1) {
@@ -238,26 +246,26 @@ class BackGridPane extends GridPane {
                     }
 
                     // put default result into the system clipboard
-                    Utilities.putStringIntoClipboard(response.getLatex_styled());
+                    Utilities.putStringIntoClipboard(response.getLatexStyled());
                     // set CopiedButton to the corresponded location
                     frontGridPane.setCopiedButtonRowIndex();
 
                     // set rendered image to renderedImageView
-                    renderedImageView.setImage(JLaTeXMathRendering.render(response.getLatex_styled()));
+                    renderedImageView.setImage(JLaTeXMathRendering.render(response.getLatexStyled()));
 
                     // set results to corresponded TextFields.
-                    latexStyledResult.setFormattedText(response.getLatex_styled());
+                    latexStyledResult.setFormattedText(response.getLatexStyled());
                     textResult.setFormattedText(response.getText());
                     // no equation found in image
-                    if (response.is_not_math()) {
+                    if (response.isNotMath()) {
                         // add $$ ... $$ wrapper, similar handling as Mathpix Snip
-                        notNumberedBlockModeResult.setFormattedText(Utilities.addDoubleDollarWrapper(response.getLatex_styled()));
+                        notNumberedBlockModeResult.setFormattedText(Utilities.addDoubleDollarWrapper(response.getLatexStyled()));
                     } else {
-                        notNumberedBlockModeResult.setFormattedText(response.getText_display());
+                        notNumberedBlockModeResult.setFormattedText(response.getTextDisplay());
                     }
-                    numberedBlockModeResult.setFormattedText(Utilities.addEquationWrapper(response.getLatex_styled()));
+                    numberedBlockModeResult.setFormattedText(Utilities.addEquationWrapper(response.getLatexStyled()));
 
-                    double confidence = response.getLatex_confidence();
+                    double confidence = response.getLatexConfidence();
 
                     // minimal confidence is set to 1%
                     if (confidence > 0 && confidence < 0.01) {

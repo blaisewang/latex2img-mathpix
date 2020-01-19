@@ -12,7 +12,7 @@ import java.io.IOException;
 public class Main {
 
     /**
-     * @param args command line arguments
+     * @param args command line arguments.
      */
     public static void main(String[] args) throws IOException {
 

@@ -1,3 +1,5 @@
+package entry;
+
 import io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -6,7 +8,7 @@ import java.io.IOException;
 
 
 /**
- * Main.java
+ * entry.Main.java
  * Java AWT wrapper to start up the JavaFX application.
  * Wrapper is used for hide app icon in the Dock.
  */

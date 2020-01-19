@@ -1,6 +1,7 @@
 package ui;
 
 import io.IOUtils;
+import io.Response;
 import javafx.concurrent.Task;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -223,9 +224,9 @@ public class BackGridPane extends GridPane {
             // show waiting label
             waitingTextLabel.setVisible(true);
 
-            Task<io.Response> task = new Task<>() {
+            Task<Response> task = new Task<>() {
                 @Override
-                protected io.Response call() {
+                protected Response call() {
                     return IOUtils.concurrentCall(clipboardImageView.getImage());
                 }
             };
@@ -234,7 +235,7 @@ public class BackGridPane extends GridPane {
                 // hide waiting label
                 waitingTextLabel.setVisible(false);
 
-                io.Response response = task.getValue();
+                Response response = task.getValue();
 
                 // if response received
                 if (response != null) {

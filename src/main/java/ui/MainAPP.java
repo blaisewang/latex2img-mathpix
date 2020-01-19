@@ -1,5 +1,6 @@
 package ui;
 
+import io.AppConfig;
 import io.IOUtils;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -246,7 +247,7 @@ public class MainAPP extends Application {
      */
     private void showAPIKeyDialog() {
 
-        io.AppConfig appConfig = IOUtils.readConfigFile();
+        AppConfig appConfig = IOUtils.readConfigFile();
         if (appConfig != null) {
             apiKeyDialog.setId(appConfig.getAppId());
             apiKeyDialog.setKey(appConfig.getAppKey());

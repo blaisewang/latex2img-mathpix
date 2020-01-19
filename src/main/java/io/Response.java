@@ -10,19 +10,19 @@ public class Response {
 
     private String error;
     private String text;
-    private String textDisplay;
-    private String latexStyled;
-    private double latexConfidence;
-    private ArrayList<String> detectionList;
+    private String text_display;
+    private String latex_styled;
+    private double latex_confidence;
+    private ArrayList<String> detection_list;
 
-    public Response(String error, String text, String textDisplay, String latexStyled, double latexConfidence, ArrayList<String> detectionList) {
+    private Response(String error, String text, String text_display, String latex_styled, double latex_confidence, ArrayList<String> detection_list) {
 
         this.error = error;
         this.text = text;
-        this.textDisplay = textDisplay;
-        this.latexStyled = latexStyled;
-        this.latexConfidence = latexConfidence;
-        this.detectionList = detectionList;
+        this.text_display = text_display;
+        this.latex_styled = latex_styled;
+        this.latex_confidence = latex_confidence;
+        this.detection_list = detection_list;
 
     }
 
@@ -44,28 +44,28 @@ public class Response {
      * @return text_display format result.
      */
     public String getTextDisplay() {
-        return textDisplay;
+        return text_display;
     }
 
     /**
      * @return LaTeX format result.
      */
     public String getLatexStyled() {
-        return latexStyled;
+        return latex_styled;
     }
 
     /**
      * @return confidence of the correctness.
      */
     public Double getLatexConfidence() {
-        return latexConfidence;
+        return latex_confidence;
     }
 
     /**
      * @return if no equation in the image.
      */
     public Boolean isNotMath() {
-        return detectionList.contains("is_not_math");
+        return detection_list.contains("is_not_math");
     }
 
 }

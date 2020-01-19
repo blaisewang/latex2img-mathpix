@@ -21,12 +21,12 @@ See the [features](https://mathpix.com/ocr#features) section on MathpixOCR websi
 
 ### New Featurs
 
-  - Self-contained executable application for macOS.
+- Self-contained executable application for macOS.
 
 ## Requirements
 
-  - Your API keys in your [MathpixOCR dashboard](https://dashboard.mathpix.com/) (different from the Mathpix account used in the Snip app)
-  - JDK 11 or higher version ([OpenJDK](https://openjdk.java.net/) is highly recommended) if you plan to use `Image2LaTeX-x.x.x.jar`
+- Your API keys in your [MathpixOCR dashboard](https://dashboard.mathpix.com/) (different from the Mathpix account used in the Snip app)
+- JDK 11 or higher version ([OpenJDK](https://openjdk.java.net/) is highly recommended) if you plan to use `Image2LaTeX-x.x.x.jar`
 
 ## Run
 
@@ -37,7 +37,7 @@ To change your API keys, macOS and Windows users will find a menu item called `A
 Linux users need to change it manually by finding the `config` file and edit it by text editor.
 
 **Do not share your `config` file with others.**
-This app will also not send your API keys to others except for MathpixOCR API server (see [OCRRequest.java](https://github.com/blaisewang/img2latex-mathpix/blob/master/src/main/java/OCRRequest.java) to learn how your API keys are used).
+This app will also not send your API keys to others except for MathpixOCR API server (see [OCRRequestHelper.java](https://github.com/blaisewang/img2latex-mathpix/blob/master/src/main/java/OCRRequestHelper.java) to learn how your API keys are used).
 
 ## Usage
 
@@ -96,13 +96,13 @@ See this [article](https://help.github.com/en/github/receiving-notifications-abo
 
 ### Development plans
 
-  - Add system tray icon support for some Linux distributions.
+- Add system tray icon support for some Linux distributions.
 
 ## Issues
 
 Please first refer to the official [API Docs](https://docs.mathpix.com/#error-id-types) about error types if an error dialogue is displayed.
 
-### Encountered an unreported issue :thinking:
+### Encountered an unreported issue 🤔
 
 Welcome to open an [issue](https://github.com/blaisewang/img2latex-mathpix/issues) with the [bug](https://github.com/blaisewang/img2latex-mathpix/labels/bug) or [question](https://github.com/blaisewang/img2latex-mathpix/labels/question) label, but the time to fix non-vital bugs may not be guaranteed.
 

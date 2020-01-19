@@ -53,7 +53,7 @@ public class MainAPP extends Application {
     public void start(Stage primaryStage) {
 
         // show API key dialog if config file does not exist
-        if (!Utilities.isConfigExists()) {
+        if (!CommonUtils.isConfigExists()) {
             showAPIKeyDialog();
         }
 
@@ -143,7 +143,7 @@ public class MainAPP extends Application {
         // macOS
         if (SystemUtils.IS_OS_MAC_OSX) {
             // dark mode
-            if (Utilities.isMacDarkMode()) {
+            if (CommonUtils.isMacDarkMode()) {
                 // load the white colour icon
                 iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-mac-dark.png");
             } else {
@@ -178,7 +178,7 @@ public class MainAPP extends Application {
         settingItem.addActionListener(event -> Platform.runLater(this::showAPIKeyDialog));
 
         String currentVersion = properties.getProperty("version");
-        String latestVersion = Utilities.getLatestVersion();
+        String latestVersion = CommonUtils.getLatestVersion();
 
         // add check for updates menu item
         MenuItem updateCheckItem = new MenuItem("Check for Updates");
@@ -243,7 +243,7 @@ public class MainAPP extends Application {
      */
     private void showAPIKeyDialog() {
 
-        AppConfig appConfig = Utilities.readConfigFile();
+        AppConfig appConfig = CommonUtils.readConfigFile();
         if (appConfig != null) {
             apiKeyDialog.setId(appConfig.getAppId());
             apiKeyDialog.setKey(appConfig.getAppKey());

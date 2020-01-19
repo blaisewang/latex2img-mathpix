@@ -35,10 +35,10 @@ import java.awt.Insets;
 import java.awt.image.BufferedImage;
 
 /**
- * JLaTeXMathRendering.java
+ * JLaTeXMathRenderingHelper.java
  * Utility class used to render LaTeX formulas.
  */
-public class JLaTeXMathRendering {
+public class JLaTeXMathRenderingHelper {
 
     /**
      * Original source: https://github.com/jeffheaton/jlatexmath-example/blob/master/src/com/jeffheaton/latex/LatexExample.java

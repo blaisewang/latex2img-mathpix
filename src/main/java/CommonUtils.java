@@ -31,10 +31,10 @@ import java.util.concurrent.*;
 
 
 /**
- * Utilities.java
+ * CommonUtils.java
  * Contains common methods used across the project.
  */
-public class Utilities {
+public class CommonUtils {
 
     // Recognition object initialisation
     private static Recognition recognition = new Recognition();

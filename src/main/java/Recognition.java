@@ -134,7 +134,7 @@ public class Recognition implements Callable<Response> {
      */
     @Override
     public Response call() {
-        return OCRRequest.getResult(parameters);
+        return OCRRequestHelper.getResult(parameters);
     }
 
 }

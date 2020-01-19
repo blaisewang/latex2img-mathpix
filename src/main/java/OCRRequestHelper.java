@@ -17,11 +17,11 @@ import java.io.UnsupportedEncodingException;
 
 
 /**
- * OCRRequest.java
+ * OCRRequestHelper.java
  * handles the OCR request with HTTP post.
  * Parsing the result as a Response object.
  */
-public class OCRRequest {
+public class OCRRequestHelper {
 
     /**
      * Send the request with Json parameters to Mathpix API.
@@ -35,7 +35,7 @@ public class OCRRequest {
         String app_id;
         String app_key;
 
-        AppConfig appConfig = Utilities.readConfigFile();
+        AppConfig appConfig = CommonUtils.readConfigFile();
 
         if (appConfig != null) {
             app_id = appConfig.getAppId();
@@ -47,7 +47,7 @@ public class OCRRequest {
 
         // workaround to resolve #26
         SSLContext context = SSLContexts.createSystemDefault();
-        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, Utilities.SUPPORTED_PROTOCOLS, null, NoopHostnameVerifier.INSTANCE);
+        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, CommonUtils.SUPPORTED_PROTOCOLS, null, NoopHostnameVerifier.INSTANCE);
 
         // maximum connection waiting time 10 seconds
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10000).build();

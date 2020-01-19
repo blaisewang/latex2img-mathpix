@@ -26,7 +26,7 @@ import java.util.concurrent.Future;
 
 
 /**
- * IO.CommonUtils.java
+ * IO.IOUtils.java
  * Contains common IO methods.
  */
 public class IOUtils {

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * UI.CommonUtils.java
+ * UI.UIUtils.java
  * Contains common UI methods.
  */
 public class UIUtils {

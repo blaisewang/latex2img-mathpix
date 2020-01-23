@@ -28,4 +28,11 @@ public class APICredentialConfig {
         return appKey;
     }
 
+    /**
+     * @return whether the config is valid.
+     */
+    public boolean isValid() {
+        return !appId.equals("") && !appKey.equals("");
+    }
+
 }

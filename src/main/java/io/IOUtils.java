@@ -131,7 +131,7 @@ public class IOUtils {
         String appId = preferences.get(I2L_APP_ID, "");
         String appKey = preferences.get(I2L_APP_KEY, "");
 
-        return !appId.equals("") && !appKey.equals("");
+        return !"".equals(appId) && !"".equals(appKey);
     }
 
     /**

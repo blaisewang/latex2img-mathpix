@@ -4,7 +4,7 @@ language: java
 jdk: oraclejdk11
 
 before_install:
-  - "sudo apt-get -y install unzip"
+  - "sudo apt-get -y install bsdtar"
 install: true
 
 before_cache:
@@ -19,7 +19,7 @@ script:
   - "./gradlew build"
 
 before_deploy:
-  - "bash ./tool/deploy.sh"
+  - "bash ./tool/jdk_setup.sh"
   - "./gradlew clean"
   - "./gradlew runtimeZip"
   - "bash ./tool/macos_release.sh"

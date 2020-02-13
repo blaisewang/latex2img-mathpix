@@ -20,7 +20,7 @@ public class Response {
 
     }
 
-    public Response(String error, String text, String latex_styled, double latex_confidence, ArrayList<String> detection_list) {
+    public Response(String error, String text, String latex_styled, double latex_confidence) {
 
         this.error = error;
         this.text = text;

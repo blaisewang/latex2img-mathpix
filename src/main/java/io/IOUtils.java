@@ -31,6 +31,8 @@ public class IOUtils {
 
     private final static String I2L_APP_ID = "I2L_APP_ID";
     private final static String I2L_APP_KEY = "I2L_APP_KEY";
+    private final static String I2L_THIRD_RESULT_WRAPPER_OPTION = "I2L_THIRD_RESULT_WRAPPER_OPTION";
+    private final static String I2L_FOURTH_RESULT_WRAPPER_OPTION = "I2L_FOURTH_RESULT_WRAPPER_OPTION";
 
     private final static String CONFIG_NODE_PATH = "I2L_API_CREDENTIAL_CONFIG";
     private static Preferences preferences = Preferences.userRoot().node(CONFIG_NODE_PATH);
@@ -127,31 +129,120 @@ public class IOUtils {
      * @return whether the API credential config is valid.
      */
     public static boolean isAPICredentialConfigValid() {
-        // default empty String
-        String appId = preferences.get(I2L_APP_ID, "");
-        String appKey = preferences.get(I2L_APP_KEY, "");
-
-        return !"".equals(appId) && !"".equals(appKey);
+        return getAPICredentialConfig().isValid();
     }
 
     /**
-     * Set API credential config with given App ID and App Key.
+     * Set app ID.
      *
-     * @param appId  App ID to be written.
+     * @param appId App ID to be written.
+     */
+    public static void setAppId(String appId) {
+        preferences.put(I2L_APP_ID, appId);
+    }
+
+    /**
+     * Set app key.
+     *
      * @param appKey App key to be written.
      */
-    public static void setAPICredentialConfig(String appId, String appKey) {
-        preferences.put(I2L_APP_ID, appId);
+    public static void setAppKey(String appKey) {
         preferences.put(I2L_APP_KEY, appKey);
     }
 
     /**
-     * Read App ID and App Key from Java Preferences API.
+     * Get App ID and App Key from Java Preferences API.
      *
      * @return IO.APICredentialConfig object.
      */
     public static APICredentialConfig getAPICredentialConfig() {
         return new APICredentialConfig(preferences.get(I2L_APP_ID, ""), preferences.get(I2L_APP_KEY, ""));
+    }
+
+    /**
+     * Set third result wrapper option.
+     *
+     * @param option option to be written.
+     */
+    public static void setThirdResultWrapperOption(int option) {
+        preferences.putInt(I2L_THIRD_RESULT_WRAPPER_OPTION, option);
+    }
+
+    /**
+     * Get third result wrapper option.
+     *
+     * @return third result wrapper option.
+     */
+    public static int getThirdResultWrapperOption() {
+        return preferences.getInt(I2L_THIRD_RESULT_WRAPPER_OPTION, 2);
+    }
+
+    /**
+     * Set fourth result wrapper option.
+     *
+     * @param option option to be written.
+     */
+    public static void setFourthResultWrapperOption(int option) {
+        preferences.putInt(I2L_FOURTH_RESULT_WRAPPER_OPTION, option);
+    }
+
+    /**
+     * Get fourth result wrapper option.
+     *
+     * @return fourth result wrapper option.
+     */
+    public static int getFourthResultWrapperOption() {
+        return preferences.getInt(I2L_FOURTH_RESULT_WRAPPER_OPTION, 0);
+    }
+
+    /**
+     * Wrap the original recognised result with the selected formatting options.
+     *
+     * @param result recognised result.
+     * @return the wrapped result.
+     */
+    public static String thirdResultWrapper(String result) {
+
+        // return null if the original result is null
+        if (result == null) {
+            return null;
+        }
+
+        int option = getThirdResultWrapperOption();
+
+        switch (option) {
+            case 0:
+                return "\\begin{equation*}\n " + result + " \n\\end{equation*}";
+            case 1:
+                return "\\begin{align*}\n " + result + " \n\\end{align*}";
+            case 3:
+                return "\\[\n " + result + " \n\\]";
+            default:
+                return "$$\n " + result + " \n$$";
+        }
+
+    }
+
+    /**
+     * Wrap the original recognised result with the selected formatting options.
+     *
+     * @param result recognised result.
+     * @return the wrapped result.
+     */
+    public static String fourthResultWrapper(String result) {
+        // return null if the original result is null
+        if (result == null) {
+            return null;
+        }
+
+        int option = getFourthResultWrapperOption();
+
+        if (option == 1) {
+            return "\\begin{align}\n " + result + " \n\\end{align}";
+        }
+
+        return "\\begin{equation}\n " + result + " \n\\end{equation}";
+
     }
 
 }

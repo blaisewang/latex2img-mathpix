@@ -1,6 +1,7 @@
 package entry;
 
 import org.apache.commons.lang3.SystemUtils;
+import ui.App;
 
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class Main {
         }
 
         // run JavaFX application
-        ui.MainAPP.main(args);
+        App.main(args);
 
     }
 

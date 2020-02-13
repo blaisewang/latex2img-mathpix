@@ -1,6 +1,5 @@
 package ui;
 
-import io.APICredentialConfig;
 import io.IOUtils;
 import io.Response;
 import javafx.concurrent.Task;
@@ -57,51 +56,51 @@ public class BackGridPane extends GridPane {
 
     private static FrontGridPane frontGridPane = new FrontGridPane(PREFERRED_MARGIN, PANE_BORDER_STROKE);
 
-    private APICredentialSettingDialog apiCredentialSettingDialog = new APICredentialSettingDialog();
+    private PreferencesDialog preferencesDialog = new PreferencesDialog();
 
     // get components from UI.FrontGridPane instance
     private static CopiedButton copiedButton = frontGridPane.getCopiedButton();
-    private static PressCopyTextField latexStyledResult = frontGridPane.getLatexStyledResult();
-    private static PressCopyTextField textResult = frontGridPane.getTextResult();
-    private static PressCopyTextField notNumberedBlockModeResult = frontGridPane.getNotNumberedBlockModeResult();
-    private static PressCopyTextField numberedBlockModeResult = frontGridPane.getNumberedBlockModeResult();
+    private static PressCopyTextField firstResult = frontGridPane.getFirstPressCopyTextField();
+    private static PressCopyTextField secondResult = frontGridPane.getSecondPressCopyTextField();
+    private static PressCopyTextField thirdResult = frontGridPane.getThirdPressCopyTextField();
+    private static PressCopyTextField fourthResult = frontGridPane.getFourthPressCopyTextField();
 
     /**
      * UI.BackGridPane Initialisation.
      */
     public BackGridPane() {
 
-        this.setPadding(new Insets(PREFERRED_MARGIN, 0, PREFERRED_MARGIN, 0));
-        this.setBackground(BACKGROUND);
+        setPadding(new Insets(PREFERRED_MARGIN, 0, PREFERRED_MARGIN, 0));
+        setBackground(BACKGROUND);
 
         // 8 * 1 layout
-        this.setVgap(8);
-        this.setHgap(2);
+        setVgap(8);
+        setHgap(2);
 
         // add "Clipboard Image" text label
         Label clipboardTextLabel = UIUtils.getTextLabel("Clipboard Image");
         UIUtils.setDefaultNodeMargin(clipboardTextLabel, PREFERRED_MARGIN, 0);
-        this.add(clipboardTextLabel, 0, 0);
+        add(clipboardTextLabel, 0, 0);
 
         waitingTextLabel.setFont(Font.font("Arial Black", FontWeight.BOLD, 12));
         waitingTextLabel.setTextFill(new Color(0.3882, 0.7882, 0.3373, 1));
         waitingTextLabel.setVisible(false);
         GridPane.setHalignment(waitingTextLabel, HPos.RIGHT);
         UIUtils.setDefaultNodeMargin(waitingTextLabel, 0, PREFERRED_MARGIN);
-        this.add(waitingTextLabel, 1, 0);
+        add(waitingTextLabel, 1, 0);
 
         // get bordered ImageView
         BorderPane clipboardBorderPane = setImageViewBorder(clipboardImageView);
-        this.add(clipboardBorderPane, 0, 1, 2, 1);
+        add(clipboardBorderPane, 0, 1, 2, 1);
 
         // add "Rendered Equation" text label
         Label renderedTextLabel = UIUtils.getTextLabel("Rendered Equation");
         UIUtils.setDefaultNodeMargin(renderedTextLabel, PREFERRED_MARGIN, 0);
-        this.add(renderedTextLabel, 0, 2, 2, 1);
+        add(renderedTextLabel, 0, 2, 2, 1);
 
         // get bordered ImageView
         BorderPane renderedBorderPane = setImageViewBorder(renderedImageView);
-        this.add(renderedBorderPane, 0, 3, 2, 1);
+        add(renderedBorderPane, 0, 3, 2, 1);
 
         frontGridPane.setOnKeyReleased(event -> {
 
@@ -126,20 +125,20 @@ public class BackGridPane extends GridPane {
 
             // enter key to send the OCR request
             if (event.getCode() == KeyCode.ENTER) {
-                this.requestHandler();
+                requestHandler();
             }
 
         });
         // add front grid panel
-        this.add(frontGridPane, 0, 4, 2, 1);
+        add(frontGridPane, 0, 4, 2, 1);
 
         // enter key pressed event binding to the UI.FrontGridPane
-        this.onKeyReleasedProperty().bind(frontGridPane.onKeyReleasedProperty());
+        onKeyReleasedProperty().bind(frontGridPane.onKeyReleasedProperty());
 
         // add "Confidence" label text
         Label confidenceText = UIUtils.getTextLabel("Confidence");
         UIUtils.setDefaultNodeMargin(confidenceText, PREFERRED_MARGIN, 0);
-        this.add(confidenceText, 0, 5, 2, 1);
+        add(confidenceText, 0, 5, 2, 1);
 
         // confidence progress bar
         UIUtils.setDefaultNodeMargin(confidenceProgressBar, PREFERRED_MARGIN, 0);
@@ -154,7 +153,7 @@ public class BackGridPane extends GridPane {
                 setStyle("-fx-accent: #63c956;");
             }
         });
-        this.add(confidenceProgressBar, 0, 6, 2, 1);
+        add(confidenceProgressBar, 0, 6, 2, 1);
 
     }
 
@@ -193,27 +192,20 @@ public class BackGridPane extends GridPane {
         renderedImageView.setImage(null);
 
         // clear result TextFields
-        latexStyledResult.setText("");
-        textResult.setText("");
-        notNumberedBlockModeResult.setText("");
-        numberedBlockModeResult.setText("");
+        firstResult.setText("");
+        secondResult.setText("");
+        thirdResult.setText("");
+        fourthResult.setText("");
 
         // set 0 confidence
         confidenceProgressBar.setProgress(0);
     }
 
     /**
-     * Call Utilities.showAPICredentialSettingDialog() to change API key.
+     * Show preferences dialog with the given tab index.
      */
-    public void showAPICredentialSettingDialog() {
-
-        APICredentialConfig APICredentialConfig = IOUtils.getAPICredentialConfig();
-        // set text displayed
-        apiCredentialSettingDialog.setId(APICredentialConfig.getAppId());
-        apiCredentialSettingDialog.setKey(APICredentialConfig.getAppKey());
-
-        apiCredentialSettingDialog.show();
-
+    public void showPreferencesDialog(int index) {
+        preferencesDialog.show(index);
     }
 
     /**
@@ -232,7 +224,7 @@ public class BackGridPane extends GridPane {
 
                 if (response.getError().equals("Invalid credentials")) {
                     // show API credential setting dialog for invalid credential error
-                    this.showAPICredentialSettingDialog();
+                    showPreferencesDialog(1);
                 } else {
                     // clear error image and last results
                     clearErrorImage();
@@ -250,16 +242,12 @@ public class BackGridPane extends GridPane {
             renderedImageView.setImage(JLaTeXMathRenderingHelper.render(response.getLatexStyled()));
 
             // set results to corresponded TextFields.
-            latexStyledResult.setFormattedText(response.getLatexStyled());
-            textResult.setFormattedText(response.getText());
-            // no equation found in image
-            if (response.isNotMath()) {
-                // add $$ ... $$ wrapper, similar handling as Mathpix Snip
-                notNumberedBlockModeResult.setFormattedText(UIUtils.addDoubleDollarWrapper(response.getLatexStyled()));
-            } else {
-                notNumberedBlockModeResult.setFormattedText(response.getTextDisplay());
-            }
-            numberedBlockModeResult.setFormattedText(UIUtils.addEquationWrapper(response.getLatexStyled()));
+            firstResult.setFormattedText(response.getLatexStyled());
+            secondResult.setFormattedText(response.getText());
+            // wrap the result
+            thirdResult.setFormattedText(IOUtils.thirdResultWrapper(response.getLatexStyled()));
+            // wrap the result
+            fourthResult.setFormattedText(IOUtils.fourthResultWrapper(response.getLatexStyled()));
 
             double confidence = response.getLatexConfidence();
 
@@ -318,7 +306,7 @@ public class BackGridPane extends GridPane {
 
                 Response response = task.getValue();
 
-                this.responseHandler(response);
+                responseHandler(response);
 
             });
             new Thread(task).start();

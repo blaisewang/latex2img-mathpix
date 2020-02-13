@@ -1,7 +1,5 @@
 package io;
 
-import java.util.ArrayList;
-
 
 /**
  * IO.Response.java

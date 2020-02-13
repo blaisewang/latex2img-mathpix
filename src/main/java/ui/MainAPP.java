@@ -129,43 +129,9 @@ public class MainAPP extends Application {
     }
 
     /**
-     * Set up a tray icon and add it to system menu bar.
-     * Original source: https://stackoverflow.com/a/40571223/4658633
-     *
-     * @return boolean variable to indicate whether the tray icon was successfully added to the menu bar.
-     * @throws IOException  if the icon resources cannot be loaded.
-     * @throws AWTException if the icon cannot be correctly added to the system menu bar.
+     * Tray icon handler.
      */
-    private Boolean addTrayIcon() throws IOException, AWTException {
-
-        // initialise the AWT toolkit
-        Toolkit.getDefaultToolkit();
-
-        // current OS didn't support system tray
-        if (!SystemTray.isSupported()) {
-            return false;
-        }
-
-        InputStream iconInputStream;
-
-        // macOS
-        if (SystemUtils.IS_OS_MAC_OSX) {
-            // dark mode
-            if (IOUtils.isMacDarkMode()) {
-                // load the white colour icon
-                iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-mac-dark.png");
-            } else {
-                // load the black colour icon
-                iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-mac.png");
-            }
-        } else if (SystemUtils.IS_OS_WINDOWS) {
-            // while colour icon for windows
-            iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-windows.png");
-        } else {
-            // blue colour icon for the rest OS
-            iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-other.png");
-        }
-        assert iconInputStream != null;
+    private void trayIconHandler(InputStream iconInputStream) throws IOException, AWTException {
 
         // set up the system tray
         SystemTray tray = SystemTray.getSystemTray();
@@ -233,6 +199,49 @@ public class MainAPP extends Application {
 
         // add icon to the system
         tray.add(trayIcon);
+
+    }
+
+    /**
+     * Set up a tray icon and add it to system menu bar.
+     * Original source: https://stackoverflow.com/a/40571223/4658633
+     *
+     * @return boolean variable to indicate whether the tray icon was successfully added to the menu bar.
+     * @throws IOException  if the icon resources cannot be loaded.
+     * @throws AWTException if the icon cannot be correctly added to the system menu bar.
+     */
+    private Boolean addTrayIcon() throws IOException, AWTException {
+
+        // initialise the AWT toolkit
+        Toolkit.getDefaultToolkit();
+
+        // current OS didn't support system tray
+        if (!SystemTray.isSupported()) {
+            return false;
+        }
+
+        InputStream iconInputStream;
+
+        // macOS
+        if (SystemUtils.IS_OS_MAC_OSX) {
+            // dark mode
+            if (IOUtils.isMacDarkMode()) {
+                // load the white colour icon
+                iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-mac-dark.png");
+            } else {
+                // load the black colour icon
+                iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-mac.png");
+            }
+        } else if (SystemUtils.IS_OS_WINDOWS) {
+            // while colour icon for windows
+            iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-windows.png");
+        } else {
+            // blue colour icon for the rest OS
+            iconInputStream = getClass().getClassLoader().getResourceAsStream("icon-other.png");
+        }
+        assert iconInputStream != null;
+
+        trayIconHandler(iconInputStream);
 
         // return as successful
         return true;

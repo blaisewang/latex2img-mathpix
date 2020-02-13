@@ -217,6 +217,70 @@ public class BackGridPane extends GridPane {
     }
 
     /**
+     * Response handler.
+     */
+    private void responseHandler(Response response) {
+
+        // if response received
+        if (response != null) {
+
+            // error occurred
+            if (response.getError() != null) {
+
+                // show error content with a alert dialog
+                UIUtils.displayError(response.getError());
+
+                if (response.getError().equals("Invalid credentials")) {
+                    // show API credential setting dialog for invalid credential error
+                    this.showAPICredentialSettingDialog();
+                } else {
+                    // clear error image and last results
+                    clearErrorImage();
+                }
+
+                return;
+            }
+
+            // put default result into the system clipboard
+            UIUtils.putStringIntoClipboard(response.getLatexStyled());
+            // set UI.CopiedButton to the corresponded location
+            frontGridPane.setCopiedButtonRowIndex();
+
+            // set rendered image to renderedImageView
+            renderedImageView.setImage(JLaTeXMathRenderingHelper.render(response.getLatexStyled()));
+
+            // set results to corresponded TextFields.
+            latexStyledResult.setFormattedText(response.getLatexStyled());
+            textResult.setFormattedText(response.getText());
+            // no equation found in image
+            if (response.isNotMath()) {
+                // add $$ ... $$ wrapper, similar handling as Mathpix Snip
+                notNumberedBlockModeResult.setFormattedText(UIUtils.addDoubleDollarWrapper(response.getLatexStyled()));
+            } else {
+                notNumberedBlockModeResult.setFormattedText(response.getTextDisplay());
+            }
+            numberedBlockModeResult.setFormattedText(UIUtils.addEquationWrapper(response.getLatexStyled()));
+
+            double confidence = response.getLatexConfidence();
+
+            // minimal confidence is set to 1%
+            if (confidence > 0 && confidence < 0.01) {
+                confidence = 0.01;
+            }
+
+            confidenceProgressBar.setProgress(confidence);
+
+        } else {
+
+            // no response received
+            UIUtils.displayError("Unexpected error occurred");
+            clearErrorImage();
+
+        }
+
+    }
+
+    /**
      * OCR request handler.
      */
     private void requestHandler() {
@@ -254,59 +318,7 @@ public class BackGridPane extends GridPane {
 
                 Response response = task.getValue();
 
-                // if response received
-                if (response != null) {
-                    // error occurred
-                    if (response.getError() != null) {
-
-                        // show error content with a alert dialog
-                        UIUtils.displayError(response.getError());
-
-                        if (response.getError().equals("Invalid credentials")) {
-                            // show API credential setting dialog for invalid credential error
-                            this.showAPICredentialSettingDialog();
-                        } else {
-                            // clear error image and last results
-                            clearErrorImage();
-                        }
-
-                        return;
-                    }
-
-                    // put default result into the system clipboard
-                    UIUtils.putStringIntoClipboard(response.getLatexStyled());
-                    // set UI.CopiedButton to the corresponded location
-                    frontGridPane.setCopiedButtonRowIndex();
-
-                    // set rendered image to renderedImageView
-                    renderedImageView.setImage(JLaTeXMathRenderingHelper.render(response.getLatexStyled()));
-
-                    // set results to corresponded TextFields.
-                    latexStyledResult.setFormattedText(response.getLatexStyled());
-                    textResult.setFormattedText(response.getText());
-                    // no equation found in image
-                    if (response.isNotMath()) {
-                        // add $$ ... $$ wrapper, similar handling as Mathpix Snip
-                        notNumberedBlockModeResult.setFormattedText(UIUtils.addDoubleDollarWrapper(response.getLatexStyled()));
-                    } else {
-                        notNumberedBlockModeResult.setFormattedText(response.getTextDisplay());
-                    }
-                    numberedBlockModeResult.setFormattedText(UIUtils.addEquationWrapper(response.getLatexStyled()));
-
-                    double confidence = response.getLatexConfidence();
-
-                    // minimal confidence is set to 1%
-                    if (confidence > 0 && confidence < 0.01) {
-                        confidence = 0.01;
-                    }
-
-                    confidenceProgressBar.setProgress(confidence);
-
-                } else {
-                    // no response received
-                    UIUtils.displayError("Unexpected error occurred");
-                    clearErrorImage();
-                }
+                this.responseHandler(response);
 
             });
             new Thread(task).start();

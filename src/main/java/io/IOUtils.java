@@ -218,6 +218,7 @@ public class IOUtils {
             case 3:
                 return "\\[\n " + result + " \n\\]";
             default:
+                // default for option 2 and others
                 return "$$\n " + result + " \n$$";
         }
 
@@ -230,6 +231,7 @@ public class IOUtils {
      * @return the wrapped result.
      */
     public static String fourthResultWrapper(String result) {
+
         // return null if the original result is null
         if (result == null) {
             return null;

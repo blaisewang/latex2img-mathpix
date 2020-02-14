@@ -12,35 +12,48 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 
+/**
+ * UI.APICredentialsTab.java
+ * Used to display and edit API Credentials in the preferences panel.
+ */
 public class APICredentialsTab extends Tab {
 
     private static final int MINIMUM_MARGIN = 12;
 
     public APICredentialsTab() {
 
+        // tab header
         setText("API Credentials");
+        // non-closable
         setClosable(false);
 
+        // load initial API credential config
         APICredentialConfig apiCredentialConfig = IOUtils.getAPICredentialConfig();
 
+        // 3 * 2 layout
         GridPane gridPane = new GridPane();
         gridPane.setHgap(3);
         gridPane.setVgap(2);
+        // 30 px padding
         gridPane.setPadding(new Insets(MINIMUM_MARGIN * 2));
 
-        Label headerLabel = new Label("Enter your MathpixOCR API credentials below");
+        // add header label
+        Label headerLabel = new Label("MathpixOCR API Credentials");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         GridPane.setMargin(headerLabel, new Insets(0, MINIMUM_MARGIN, MINIMUM_MARGIN, 0));
         gridPane.add(headerLabel, 0, 0, 2, 1);
 
-        gridPane.add(new Label("APP ID:"), 0, 1);
+        // add "App ID:" label
+        gridPane.add(new Label("App ID:"), 0, 1);
 
+        // add app id TextFiled
         TextField idTextField = new TextField();
-        idTextField.setPromptText("APP ID");
+        idTextField.setPromptText("App ID");
         idTextField.setText(apiCredentialConfig.getAppId());
         idTextField.setPrefWidth(300);
         GridPane.setMargin(idTextField, new Insets(MINIMUM_MARGIN));
 
+        // save to Java Preferences API when text is changed
         idTextField.textProperty().addListener((observable, oldValue, newValue) -> IOUtils.setAppId(newValue));
 
         // moves the caret to after the last char of the text
@@ -52,16 +65,20 @@ public class APICredentialsTab extends Tab {
 
         gridPane.add(idTextField, 1, 1);
 
-        gridPane.add(new Label("APP Key:"), 0, 2);
+        // add "App Key:" label
+        gridPane.add(new Label("App Key:"), 0, 2);
 
+        // add app key TextFiled
         TextField keyTextField = new TextField();
-        keyTextField.setPromptText("APP Key");
+        keyTextField.setPromptText("App Key");
         keyTextField.setText(apiCredentialConfig.getAppKey());
         keyTextField.setPrefWidth(300);
         GridPane.setMargin(keyTextField, new Insets(MINIMUM_MARGIN));
 
+        // save to Java Preferences API when text is changed
         keyTextField.textProperty().addListener((observable, oldValue, newValue) -> IOUtils.setAppKey(newValue));
 
+        // moves the caret to after the last char of the text
         keyTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 Platform.runLater(keyTextField::end);

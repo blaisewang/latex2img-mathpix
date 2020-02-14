@@ -73,7 +73,7 @@ public class BackGridPane extends GridPane {
         setPadding(new Insets(PREFERRED_MARGIN, 0, PREFERRED_MARGIN, 0));
         setBackground(BACKGROUND);
 
-        // 8 * 1 layout
+        // 8 * 2 layout
         setVgap(8);
         setHgap(2);
 

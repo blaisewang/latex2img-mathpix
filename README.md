@@ -23,9 +23,7 @@ See the [features](https://mathpix.com/ocr#features) section on MathpixOCR websi
 ### New Features
 
 - New `Preferences` panel.
-
 - Multiple formatting options for 3rd and 4th results.
-
 - HTTP proxy support for making OCR request.
 
 ## Requirements

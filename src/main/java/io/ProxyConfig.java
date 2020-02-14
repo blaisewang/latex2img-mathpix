@@ -40,7 +40,7 @@ public class ProxyConfig {
      * @return whether the config is valid.
      */
     public boolean isValid() {
-        return !hostname.equals("") & port >= 0 && port <= 65535;
+        return !"".equals(hostname) & port >= 0 && port <= 65535;
     }
 
 }

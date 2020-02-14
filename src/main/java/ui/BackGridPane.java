@@ -222,12 +222,25 @@ public class BackGridPane extends GridPane {
                 // show error content with a alert dialog
                 UIUtils.displayError(response.getError());
 
-                if (response.getError().equals("Invalid credentials")) {
-                    // show API credential setting dialog for invalid credential error
-                    showPreferencesDialog(1);
-                } else {
-                    // clear error image and last results
-                    clearErrorImage();
+                switch (response.getError()) {
+                    case IOUtils.INVALID_CREDENTIALS_ERROR:
+                        // show API credential setting dialog for invalid credential error
+                        showPreferencesDialog(1);
+                        break;
+                    case IOUtils.INVALID_PROXY_CONFIG_ERROR:
+                        // show proxy setting dialog for invalid proxy config
+                        showPreferencesDialog(2);
+                        break;
+                    case IOUtils.CONNECTION_REFUSED_ERROR:
+                        if (IOUtils.getProxyEnabled()) {
+                            // show proxy setting dialog for possible invalid proxy config
+                            showPreferencesDialog(2);
+                        }
+                        break;
+                    default:
+                        // clear error image and last results
+                        clearErrorImage();
+                        break;
                 }
 
                 return;

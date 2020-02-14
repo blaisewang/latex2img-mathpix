@@ -28,7 +28,7 @@ public class PreferencesDialog {
         stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 
         // add GeneralTab (index: 0) and APICredentialsTab (index: 1) to the TabPane
-        TabPane tabPane = new TabPane(new GeneralTab(), new APICredentialsTab());
+        TabPane tabPane = new TabPane(new GeneralTab(), new APICredentialsTab(), new HTTPTab());
 
         selectionModel = tabPane.getSelectionModel();
 
@@ -56,8 +56,6 @@ public class PreferencesDialog {
             dialog.showAndWait();
 
         }
-
-        stage.toFront();
 
     }
 

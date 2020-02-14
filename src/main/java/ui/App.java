@@ -168,7 +168,7 @@ public class App extends Application {
         // add click action listener
         updateCheckItem.addActionListener(event -> {
             try {
-                Desktop.getDesktop().browse(new URI("https://github.com/blaisewang/img2latex-mathpix/releases"));
+                Desktop.getDesktop().browse(new URI(IOUtils.I2L_GITHUB_RELEASES_URL));
             } catch (IOException | URISyntaxException ignored) {
             }
         });

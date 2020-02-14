@@ -44,14 +44,16 @@ public class APICredentialsTab extends Tab {
         gridPane.add(headerLabel, 0, 0, 2, 1);
 
         // add "App ID:" label
-        gridPane.add(new Label("App ID:"), 0, 1);
+        Label appIdLabel = new Label("App ID:");
+        GridPane.setMargin(appIdLabel, new Insets(MINIMUM_MARGIN));
+        gridPane.add(appIdLabel, 0, 1);
 
         // add app id TextFiled
         TextField idTextField = new TextField();
         idTextField.setPromptText("App ID");
         idTextField.setText(apiCredentialConfig.getAppId());
-        idTextField.setPrefWidth(300);
-        GridPane.setMargin(idTextField, new Insets(MINIMUM_MARGIN));
+        idTextField.setPrefWidth(280);
+        GridPane.setMargin(idTextField, new Insets(MINIMUM_MARGIN, MINIMUM_MARGIN, MINIMUM_MARGIN, 0));
 
         // save to Java Preferences API when text is changed
         idTextField.textProperty().addListener((observable, oldValue, newValue) -> IOUtils.setAppId(newValue));
@@ -66,14 +68,16 @@ public class APICredentialsTab extends Tab {
         gridPane.add(idTextField, 1, 1);
 
         // add "App Key:" label
-        gridPane.add(new Label("App Key:"), 0, 2);
+        Label appKeyLabel = new Label("App Key:");
+        GridPane.setMargin(appKeyLabel, new Insets(MINIMUM_MARGIN));
+        gridPane.add(appKeyLabel, 0, 2);
 
         // add app key TextFiled
         TextField keyTextField = new TextField();
         keyTextField.setPromptText("App Key");
         keyTextField.setText(apiCredentialConfig.getAppKey());
-        keyTextField.setPrefWidth(300);
-        GridPane.setMargin(keyTextField, new Insets(MINIMUM_MARGIN));
+        keyTextField.setPrefWidth(280);
+        GridPane.setMargin(keyTextField, new Insets(MINIMUM_MARGIN, MINIMUM_MARGIN, MINIMUM_MARGIN, 0));
 
         // save to Java Preferences API when text is changed
         keyTextField.textProperty().addListener((observable, oldValue, newValue) -> IOUtils.setAppKey(newValue));

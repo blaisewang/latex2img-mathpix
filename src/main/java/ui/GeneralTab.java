@@ -21,8 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class GeneralTab extends Tab {
 
-    private static final int MINIMUM_MARGIN = 5;
     private static final int PANEL_MARGIN = 20;
+    private static final int MINIMUM_MARGIN = 5;
 
     private final static String ORIGINAL_RESULT = "e^{\\pi}";
 
@@ -63,14 +63,14 @@ public class GeneralTab extends Tab {
         );
 
         // load initial third formatting option
-        AtomicInteger thirdOption = new AtomicInteger(IOUtils.getThirdResultWrapperOption());
+        AtomicInteger thirdOption = new AtomicInteger(IOUtils.getThirdResultWrapper());
         thirdWrapperOptionList.get(thirdOption.get()).setSelected(true);
 
         // toggle changed listener
         thirdWrapperOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
 
             thirdOption.set(thirdWrapperOptions.getToggles().indexOf(thirdWrapperOptions.getSelectedToggle()));
-            IOUtils.setThirdResultWrapperOption(thirdOption.get());
+            IOUtils.setThirdResultWrapper(thirdOption.get());
             thirdResult.setText(IOUtils.thirdResultWrapper(ORIGINAL_RESULT).replace("\n", ""));
 
         });
@@ -99,14 +99,14 @@ public class GeneralTab extends Tab {
         );
 
         // load initial fourth formatting option
-        AtomicInteger fourthOption = new AtomicInteger(IOUtils.getFourthResultWrapperOption());
+        AtomicInteger fourthOption = new AtomicInteger(IOUtils.getFourthResultWrapper());
         fourthWrapperOptionList.get(fourthOption.get()).setSelected(true);
 
         // toggle changed listener
         fourthWrapperOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
 
             fourthOption.set(fourthWrapperOptions.getToggles().indexOf(fourthWrapperOptions.getSelectedToggle()));
-            IOUtils.setFourthResultWrapperOption(fourthOption.get());
+            IOUtils.setFourthResultWrapper(fourthOption.get());
             fourthResult.setText(IOUtils.fourthResultWrapper(ORIGINAL_RESULT).replace("\n", ""));
 
         });

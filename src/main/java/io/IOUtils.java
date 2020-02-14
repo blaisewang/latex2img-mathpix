@@ -3,6 +3,7 @@ package io;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import javafx.scene.image.Image;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
@@ -29,10 +30,25 @@ import java.util.prefs.Preferences;
  */
 public class IOUtils {
 
+
+    public final static String UNKNOWN_HOST_ERROR = "Unknown host";
+    public final static String CONNECTION_REFUSED_ERROR = "Connection refused";
+    public final static String INVALID_CREDENTIALS_ERROR = "Invalid credentials";
+    public final static String INVALID_PROXY_CONFIG_ERROR = "Invalid proxy config";
+    public final static String SSL_PEER_SHUT_DOWN_INCORRECTLY_ERROR = "SSL peer shut down incorrectly";
+
+    public final static String OCR_API_URL = "https://api.mathpix.com/v3/latex";
+    public final static String I2L_GITHUB_RELEASES_URL = "https://github.com/blaisewang/img2latex-mathpix/releases";
+
+    private final static String I2L_LATEST_RELEASE_API_URL = "https://api.github.com/repos/blaisewang/img2latex-mathpix/releases/latest";
+
     private final static String I2L_APP_ID = "I2L_APP_ID";
     private final static String I2L_APP_KEY = "I2L_APP_KEY";
-    private final static String I2L_THIRD_RESULT_WRAPPER_OPTION = "I2L_THIRD_RESULT_WRAPPER_OPTION";
-    private final static String I2L_FOURTH_RESULT_WRAPPER_OPTION = "I2L_FOURTH_RESULT_WRAPPER_OPTION";
+    private final static String I2L_THIRD_RESULT_WRAPPER = "I2L_THIRD_RESULT_WRAPPER";
+    private final static String I2L_FOURTH_RESULT_WRAPPER = "I2L_FOURTH_RESULT_WRAPPER";
+    private final static String I2L_PROXY_ENABLED = "I2L_PROXY_ENABLED";
+    private final static String I2L_PROXY_HOSTNAME = "I2L_PROXY_HOSTNAME";
+    private final static String I2L_PROXY_PORT = "I2L_PROXY_PORT";
 
     private final static String CONFIG_NODE_PATH = "I2L_API_CREDENTIAL_CONFIG";
     private static Preferences preferences = Preferences.userRoot().node(CONFIG_NODE_PATH);
@@ -94,14 +110,24 @@ public class IOUtils {
         SSLContext context = SSLContexts.createSystemDefault();
         SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, SUPPORTED_PROTOCOLS, null, NoopHostnameVerifier.INSTANCE);
 
-        // maximum connection waiting time 1 seconds
+        // maximum connection waiting time 1 second
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(1000).build();
+
+        if (IOUtils.getProxyEnabled()) {
+            // proxy enabled
+            ProxyConfig proxyConfig = IOUtils.getProxyConfig();
+            if (proxyConfig.isValid()) {
+                HttpHost proxy = new HttpHost(proxyConfig.getHostname(), proxyConfig.getPort());
+                // maximum connection waiting time 1 second
+                requestConfig = RequestConfig.custom().setConnectTimeout(1000).setProxy(proxy).build();
+            }
+        }
 
         // build the HTTP client with above config
         CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).setSSLSocketFactory(sslConnectionSocketFactory).build();
 
         // API url
-        HttpGet request = new HttpGet("https://api.github.com/repos/blaisewang/img2latex-mathpix/releases/latest");
+        HttpGet request = new HttpGet(I2L_LATEST_RELEASE_API_URL);
 
         try {
 
@@ -164,8 +190,8 @@ public class IOUtils {
      *
      * @param option option to be written.
      */
-    public static void setThirdResultWrapperOption(int option) {
-        preferences.putInt(I2L_THIRD_RESULT_WRAPPER_OPTION, option);
+    public static void setThirdResultWrapper(int option) {
+        preferences.putInt(I2L_THIRD_RESULT_WRAPPER, option);
     }
 
     /**
@@ -173,8 +199,8 @@ public class IOUtils {
      *
      * @return third result wrapper option.
      */
-    public static int getThirdResultWrapperOption() {
-        return preferences.getInt(I2L_THIRD_RESULT_WRAPPER_OPTION, 2);
+    public static int getThirdResultWrapper() {
+        return preferences.getInt(I2L_THIRD_RESULT_WRAPPER, 2);
     }
 
     /**
@@ -182,8 +208,8 @@ public class IOUtils {
      *
      * @param option option to be written.
      */
-    public static void setFourthResultWrapperOption(int option) {
-        preferences.putInt(I2L_FOURTH_RESULT_WRAPPER_OPTION, option);
+    public static void setFourthResultWrapper(int option) {
+        preferences.putInt(I2L_FOURTH_RESULT_WRAPPER, option);
     }
 
     /**
@@ -191,8 +217,8 @@ public class IOUtils {
      *
      * @return fourth result wrapper option.
      */
-    public static int getFourthResultWrapperOption() {
-        return preferences.getInt(I2L_FOURTH_RESULT_WRAPPER_OPTION, 0);
+    public static int getFourthResultWrapper() {
+        return preferences.getInt(I2L_FOURTH_RESULT_WRAPPER, 0);
     }
 
     /**
@@ -208,7 +234,7 @@ public class IOUtils {
             return null;
         }
 
-        int option = getThirdResultWrapperOption();
+        int option = getThirdResultWrapper();
 
         switch (option) {
             case 0:
@@ -237,7 +263,7 @@ public class IOUtils {
             return null;
         }
 
-        int option = getFourthResultWrapperOption();
+        int option = getFourthResultWrapper();
 
         if (option == 1) {
             return "\\begin{align}\n " + result + " \n\\end{align}";
@@ -245,6 +271,59 @@ public class IOUtils {
 
         return "\\begin{equation}\n " + result + " \n\\end{equation}";
 
+    }
+
+    /**
+     * Set using proxy or not.
+     *
+     * @param option option to be written.
+     */
+    public static void setProxyEnabled(boolean option) {
+        preferences.putBoolean(I2L_PROXY_ENABLED, option);
+    }
+
+    /**
+     * Get using proxy or not.
+     *
+     * @return proxy enabled option.
+     */
+    public static boolean getProxyEnabled() {
+        return preferences.getBoolean(I2L_PROXY_ENABLED, false);
+    }
+
+    /**
+     * Set proxy host.
+     *
+     * @param host host to be written.
+     */
+    public static void setProxyHostname(String host) {
+        preferences.put(I2L_PROXY_HOSTNAME, host);
+    }
+
+    /**
+     * Set proxy port.
+     *
+     * @param port port to be written.
+     */
+    public static void setProxyPort(String port) {
+        preferences.put(I2L_PROXY_PORT, port);
+    }
+
+    /**
+     * Get proxy config.
+     *
+     * @return proxy config.
+     */
+    public static ProxyConfig getProxyConfig() {
+
+        int port;
+        try {
+            port = Integer.parseInt(preferences.get(I2L_PROXY_PORT, ""));
+        } catch (NumberFormatException e) {
+            port = -1;
+        }
+
+        return new ProxyConfig(preferences.get(I2L_PROXY_HOSTNAME, ""), port);
     }
 
 }

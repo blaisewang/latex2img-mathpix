@@ -45,9 +45,7 @@ public class GeneralTab extends Tab {
 
         CheckBox improvedOCREnableOptionCheckBox = new CheckBox("Improved OCR");
         improvedOCREnableOptionCheckBox.setSelected(improvedOCREnableOption);
-
         improvedOCREnableOptionCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> IOUtils.setImprovedOCREnableOption(newValue));
-
         GridPane.setMargin(improvedOCREnableOptionCheckBox, new Insets(0, MINIMUM_MARGIN, MINIMUM_MARGIN, 0));
         gridPane.add(improvedOCREnableOptionCheckBox, 0, 0, 4, 1);
 
@@ -59,13 +57,10 @@ public class GeneralTab extends Tab {
 
         // initial third example result
         String initialThirdResult = IOUtils.thirdResultFormatter("\\(" + ORIGINAL_RESULT + " \\)").replace("\n", "");
-
         Label thirdResult = new Label(initialThirdResult);
         thirdResult.setFont(Font.font(14));
         GridPane.setMargin(thirdResult, new Insets(MINIMUM_MARGIN, MINIMUM_MARGIN, MINIMUM_MARGIN, 0));
         gridPane.add(thirdResult, 0, 2, 4, 1);
-
-        final ToggleGroup thirdFormattingOptions = new ToggleGroup();
 
         List<RadioButton> thirdFormattingOptionList = Arrays.asList(
                 new RadioButton("\\begin{equation*}.."),
@@ -79,12 +74,11 @@ public class GeneralTab extends Tab {
         thirdFormattingOptionList.get(thirdOption.get()).setSelected(true);
 
         // toggle changed listener
+        final ToggleGroup thirdFormattingOptions = new ToggleGroup();
         thirdFormattingOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-
             thirdOption.set(thirdFormattingOptions.getToggles().indexOf(thirdFormattingOptions.getSelectedToggle()));
             IOUtils.setThirdResultFormattingOption(thirdOption.get());
             thirdResult.setText(IOUtils.thirdResultFormatter("\\(" + ORIGINAL_RESULT + " \\)").replace("\n", ""));
-
         });
 
         // add all radio buttons to the same toggle group
@@ -97,13 +91,10 @@ public class GeneralTab extends Tab {
 
         // initial fourth example result
         String initialFourthResult = IOUtils.fourthResultFormatter("\\(" + ORIGINAL_RESULT + " \\)").replace("\n", "");
-
         Label fourthResult = new Label(initialFourthResult);
         fourthResult.setFont(Font.font(14));
         GridPane.setMargin(fourthResult, new Insets(MINIMUM_MARGIN, MINIMUM_MARGIN, MINIMUM_MARGIN, 0));
         gridPane.add(fourthResult, 0, 4, 4, 1);
-
-        final ToggleGroup fourthFormattingOptions = new ToggleGroup();
 
         List<RadioButton> fourthFormattingOptionList = Arrays.asList(
                 new RadioButton("\\begin{equation}.."),
@@ -115,12 +106,11 @@ public class GeneralTab extends Tab {
         fourthFormattingOptionList.get(fourthOption.get()).setSelected(true);
 
         // toggle changed listener
+        final ToggleGroup fourthFormattingOptions = new ToggleGroup();
         fourthFormattingOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-
             fourthOption.set(fourthFormattingOptions.getToggles().indexOf(fourthFormattingOptions.getSelectedToggle()));
             IOUtils.setFourthResultFormattingOption(fourthOption.get());
             fourthResult.setText(IOUtils.fourthResultFormatter("\\(" + ORIGINAL_RESULT + " \\)").replace("\n", ""));
-
         });
 
         // add all radio buttons to the same toggle group

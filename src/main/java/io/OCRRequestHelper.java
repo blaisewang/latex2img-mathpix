@@ -57,7 +57,7 @@ public class OCRRequestHelper {
 
         RequestConfig requestConfig;
 
-        if (IOUtils.getProxyEnabled()) {
+        if (IOUtils.getProxyEnableOption()) {
             // proxy enabled
             ProxyConfig proxyConfig = IOUtils.getProxyConfig();
             if (proxyConfig.isValid()) {
@@ -84,7 +84,12 @@ public class OCRRequestHelper {
         }
 
         // OCR API url
-        HttpPost request = new HttpPost(IOUtils.OCR_API_URL);
+        HttpPost request;
+        if (parameters.has("skip_recrop")) {
+            request = new HttpPost(IOUtils.LEGACY_API_URL);
+        } else {
+            request = new HttpPost(IOUtils.TEXT_API_URL);
+        }
 
         // with app_id, app_key, and json type content as the post header
         request.addHeader("app_id", app_id);

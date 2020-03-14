@@ -23,8 +23,7 @@ Image2LaTeX 是空闲时间的个人项目，仅保留了 Snip 的核心功能�
 
 ### 新功能
 
-- 新 `Preferences` 面板。
-- 第三和第四个结果的多种格式选项。
+- 新 `Improved OCR` 选项支持[多选](https://mathpix.com/blog/mathpix-text-endpoint)、[段落](https://mathpix.com/blog/snip-2.0)、[基础表格](https://mathpix.com/blog/v1-table-recognition)的识别。
 - 支持使用 HTTP 代理发出 OCR 请求。
 
 ## 使用要求
@@ -85,9 +84,7 @@ java -jar Image2LaTeX-x.x.x.jar
 
 ### `*.jar` 和 `*.zip` 版本的区别
 
-`*.zip` 版本不需要安装 JDK 11 即可使用。
-
-考虑到使用这类应用的用户群体，可能有很大一部分已经安装了 JDK ，所以发布了体积更小的 `Image2LaTeX-x.x.x.jar` 版本。
+`*.zip` 版本不需要安装 JDK 11 就可以使用。
 
 ### 第一时间获取新版本的发布
 
@@ -113,10 +110,10 @@ java -jar Image2LaTeX-x.x.x.jar
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://nyxflower.github.io/"><img src="https://avatars1.githubusercontent.com/u/38955723?v=4" width="100px;" alt=""/><br /><sub><b>Hao Xu</b></sub></a><br />🤔</td>
-    <td align="center"><a href="http://blog.gongyan.me"><img src="https://avatars0.githubusercontent.com/u/14838533?v=4" width="100px;" alt=""/><br /><sub><b>龚焱</b></sub></a><br />🤔 ✅</td>
-    <td align="center"><a href="https://github.com/wtbsw"><img src="https://avatars1.githubusercontent.com/u/14332504?v=4" width="100px;" alt=""/><br /><sub><b>BOB</b></sub></a><br />🐛 ⚠️</td>
-    <td align="center"><a href="https://github.com/YuiTH"><img src="https://avatars1.githubusercontent.com/u/22416062?v=4" width="100px;" alt=""/><br /><sub><b>YuiTH</b></sub></a><br />🐛</td>
+    <td style="text-align: center;"><a href="https://nyxflower.github.io/"><img src="https://avatars1.githubusercontent.com/u/38955723?v=4" width="100px;" alt=""/><br /><sub><b>Hao Xu</b></sub></a><br />🤔</td>
+    <td style="text-align: center;"><a href="http://blog.gongyan.me"><img src="https://avatars0.githubusercontent.com/u/14838533?v=4" width="100px;" alt=""/><br /><sub><b>龚焱</b></sub></a><br />🤔 ✅</td>
+    <td style="text-align: center;"><a href="https://github.com/wtbsw"><img src="https://avatars1.githubusercontent.com/u/14332504?v=4" width="100px;" alt=""/><br /><sub><b>BOB</b></sub></a><br />🐛 ⚠️</td>
+    <td style="text-align: center;"><a href="https://github.com/YuiTH"><img src="https://avatars1.githubusercontent.com/u/22416062?v=4" width="100px;" alt=""/><br /><sub><b>YuiTH</b></sub></a><br />🐛</td>
   </tr>
 </table>
 

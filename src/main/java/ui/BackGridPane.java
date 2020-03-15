@@ -240,12 +240,6 @@ public class BackGridPane extends GridPane {
                         // show proxy setting dialog for invalid proxy config
                         showPreferencesDialog(2);
                         break;
-                    case IOUtils.CONNECTION_REFUSED_ERROR:
-                        if (IOUtils.getProxyEnableOption()) {
-                            // show proxy setting dialog for possible invalid proxy config
-                            showPreferencesDialog(2);
-                        }
-                        break;
                     default:
                         // clear error image and last results
                         clearErrorImage();
@@ -253,6 +247,7 @@ public class BackGridPane extends GridPane {
                 }
 
                 return;
+
             }
 
             String[] resultList = new String[]{
@@ -297,7 +292,7 @@ public class BackGridPane extends GridPane {
         } else {
 
             // no response received
-            UIUtils.displayError("Unexpected error occurred");
+            UIUtils.displayError(IOUtils.UNEXPECTED_ERROR);
             clearErrorImage();
 
         }
@@ -355,16 +350,16 @@ public class BackGridPane extends GridPane {
                 }
             };
             legacyOCRTask.setOnSucceeded(event -> {
-                Response legacyOCRResponse = legacyOCRTask.getValue();
+                Response response = legacyOCRTask.getValue();
                 if (ref.textOCRTask != null) {
                     try {
                         Response textOCRResponse = ref.textOCRTask.get();
-                        legacyOCRResponse.setText(textOCRResponse.getText());
-                        legacyOCRResponse.setLatexConfidence(textOCRResponse.getConfidence());
+                        response.setText(textOCRResponse.getText());
+                        response.setLatexConfidence(textOCRResponse.getConfidence());
                     } catch (InterruptedException | ExecutionException ignored) {
                     }
                 }
-                responseHandler(legacyOCRResponse);
+                responseHandler(response);
                 // hide waiting label
                 waitingTextLabel.setVisible(false);
             });
@@ -373,7 +368,7 @@ public class BackGridPane extends GridPane {
         } else {
 
             // no image in the system clipboard
-            UIUtils.displayError("No image found in the clipboard");
+            UIUtils.displayError(IOUtils.NO_IMAGE_FOUND_IN_THE_CLIPBOARD_ERROR);
 
         }
 

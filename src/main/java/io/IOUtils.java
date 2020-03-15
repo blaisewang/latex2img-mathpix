@@ -1,20 +1,7 @@
 package io;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import javafx.scene.image.Image;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.ssl.SSLContexts;
-import org.apache.http.util.EntityUtils;
 
-import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -30,17 +17,15 @@ import java.util.prefs.Preferences;
  */
 public class IOUtils {
 
-    public final static String UNKNOWN_HOST_ERROR = "Unknown host";
-    public final static String CONNECTION_REFUSED_ERROR = "Connection refused";
+    public final static String UNEXPECTED_ERROR = "Unexpected error";
     public final static String INVALID_CREDENTIALS_ERROR = "Invalid credentials";
     public final static String INVALID_PROXY_CONFIG_ERROR = "Invalid proxy config";
-    public final static String SSL_PEER_SHUT_DOWN_INCORRECTLY_ERROR = "SSL peer shut down incorrectly";
+    public final static String NO_IMAGE_FOUND_IN_THE_CLIPBOARD_ERROR = "No image found in the clipboard";
 
     public final static String TEXT_API_URL = "https://api.mathpix.com/v3/text";
     public final static String LEGACY_API_URL = "https://api.mathpix.com/v3/latex";
-    public final static String I2L_GITHUB_RELEASES_URL = "https://github.com/blaisewang/img2latex-mathpix/releases";
-
-    private final static String I2L_LATEST_RELEASE_API_URL = "https://api.github.com/repos/blaisewang/img2latex-mathpix/releases/latest";
+    public final static String MATHPIX_DASHBOARD_URL = "https://dashboard.mathpix.com/";
+    public final static String GITHUB_RELEASES_URL = "https://github.com/blaisewang/img2latex-mathpix/releases";
 
     private final static String I2L_APP_ID = "I2L_APP_ID";
     private final static String I2L_APP_KEY = "I2L_APP_KEY";
@@ -52,9 +37,35 @@ public class IOUtils {
     private final static String I2L_IMPROVED_OCR_ENABLE_OPTION = "I2L_IMPROVED_OCR_ENABLE_OPTION";
 
     private final static String CONFIG_NODE_PATH = "I2L_API_CREDENTIAL_CONFIG";
-    public final static String[] SUPPORTED_PROTOCOLS = new String[]{"TLSv1.2"};
-
     private static Preferences preferences = Preferences.userRoot().node(CONFIG_NODE_PATH);
+
+    /**
+     * @return if os is macOS.
+     */
+    public static boolean isOSMacOSX() {
+
+        String osName = System.getProperty("os.name");
+        if (osName == null) {
+            return false;
+        }
+
+        return osName.startsWith("Mac OS X");
+
+    }
+
+    /**
+     * @return if os is Windows.
+     */
+    public static boolean isOSWindows() {
+
+        String osName = System.getProperty("os.name");
+        if (osName == null) {
+            return false;
+        }
+
+        return osName.startsWith("Windows");
+
+    }
 
     /**
      * Original source: https://stackoverflow.com/a/33477375/4658633
@@ -94,58 +105,6 @@ public class IOUtils {
         }
 
         return null;
-
-    }
-
-    /**
-     * Get latest release version via GitHub API.
-     *
-     * @return latest released version.
-     */
-    public static String getLatestVersion() {
-
-        // workaround to resolve #26
-        SSLContext context = SSLContexts.createSystemDefault();
-        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, SUPPORTED_PROTOCOLS, null, NoopHostnameVerifier.INSTANCE);
-
-        // maximum connection waiting time 1 second
-        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(1000).build();
-
-        if (IOUtils.getProxyEnableOption()) {
-            // proxy enabled
-            ProxyConfig proxyConfig = IOUtils.getProxyConfig();
-            if (proxyConfig.isValid()) {
-                HttpHost proxy = new HttpHost(proxyConfig.getHostname(), proxyConfig.getPort());
-                // maximum connection waiting time 1 second
-                requestConfig = RequestConfig.custom().setConnectTimeout(1000).setProxy(proxy).build();
-            }
-        }
-
-        // build the HTTP client with above config
-        CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).setSSLSocketFactory(sslConnectionSocketFactory).build();
-
-        // API url
-        HttpGet request = new HttpGet(I2L_LATEST_RELEASE_API_URL);
-
-        try {
-
-            // get the raw result from the execution
-            HttpResponse result = httpClient.execute(request);
-            // obtain the message entity of this response
-            String json = EntityUtils.toString(result.getEntity(), "UTF-8");
-            // parse json string to Json object
-            JsonObject jsonObject = new Gson().fromJson(json, JsonObject.class);
-            // close and release resources
-            httpClient.close();
-
-            String[] tag = jsonObject.get("tag_name").getAsString().split("v");
-            return tag[tag.length - 1];
-
-        } catch (IOException ignored) {
-
-            return null;
-
-        }
 
     }
 
@@ -220,7 +179,7 @@ public class IOUtils {
     }
 
     /**
-     * @param string  string to be formatted.
+     * @param string          string to be formatted.
      * @param left_delimiter  prefix.
      * @param right_delimiter postfix.
      * @return formatted string.
@@ -237,6 +196,7 @@ public class IOUtils {
         }
 
         return string.replace("\\(", "$").replace("\\)", "$").
+                replace("\\[\n", "\\[").replace("\n\\]", "\\]").
                 replace("\\[", formatted_left_delimiter).replace("\\]", formatted_right_delimiter);
 
     }

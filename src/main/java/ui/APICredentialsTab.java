@@ -30,7 +30,7 @@ public class APICredentialsTab extends Tab {
     public APICredentialsTab() {
 
         // tab header
-        setText("API Credentials");
+        setText(" API Credentials ");
         // non-closable
         setClosable(false);
 
@@ -54,7 +54,7 @@ public class APICredentialsTab extends Tab {
         hyperlink.setOnAction(e -> {
             if (Desktop.isDesktopSupported()) {
                 try {
-                    Desktop.getDesktop().browse(new URI("https://dashboard.mathpix.com/"));
+                    Desktop.getDesktop().browse(new URI(IOUtils.MATHPIX_DASHBOARD_URL));
                 } catch (IOException | URISyntaxException ignored) {
                 }
             }

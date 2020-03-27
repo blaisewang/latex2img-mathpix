@@ -218,6 +218,24 @@ public class BackGridPane extends GridPane {
     }
 
     /**
+     * Error Handler.
+     */
+    private void errorHandler(Response response) {
+        // show error content with a alert dialog
+        UIUtils.displayError(response.getError());
+
+        switch (response.getError()) {
+            // show API credential setting dialog for invalid credential error
+            case IOUtils.INVALID_CREDENTIALS_ERROR -> showPreferencesDialog(1);
+            // show proxy setting dialog for invalid proxy config
+            case IOUtils.INVALID_PROXY_CONFIG_ERROR -> showPreferencesDialog(2);
+            // clear error image and last results
+            default -> clearErrorImage();
+        }
+
+    }
+
+    /**
      * Response handler.
      */
     private void responseHandler(Response response) {
@@ -227,21 +245,8 @@ public class BackGridPane extends GridPane {
 
             // error occurred
             if (response.getError() != null) {
-
-                // show error content with a alert dialog
-                UIUtils.displayError(response.getError());
-
-                switch (response.getError()) {
-                    // show API credential setting dialog for invalid credential error
-                    case IOUtils.INVALID_CREDENTIALS_ERROR -> showPreferencesDialog(1);
-                    // show proxy setting dialog for invalid proxy config
-                    case IOUtils.INVALID_PROXY_CONFIG_ERROR -> showPreferencesDialog(2);
-                    // clear error image and last results
-                    default -> clearErrorImage();
-                }
-
+                errorHandler(response);
                 return;
-
             }
 
             String[] resultList = new String[]{

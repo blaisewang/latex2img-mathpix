@@ -1,7 +1,7 @@
 os: linux
 dist: trusty
 language: java
-jdk: oraclejdk11
+jdk: oraclejdk14
 
 before_install:
   - "sudo apt-get -y install bsdtar"

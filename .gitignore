@@ -50,8 +50,11 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
-# App config file
-config
-
 # JDK directory
 jdk
+
+# releases directory
+releases
+
+# .DS_Store
+.DS_Store

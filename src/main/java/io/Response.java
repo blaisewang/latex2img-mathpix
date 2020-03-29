@@ -10,6 +10,7 @@ public class Response {
     private final String error;
     private String text;
     private String latex_styled;
+    private String mathml;
     private double confidence;
     private double latex_confidence;
 
@@ -19,11 +20,12 @@ public class Response {
 
     }
 
-    public Response(String error, String text, String latex_styled, double confidence, double latex_confidence) {
+    public Response(String error, String text, String latex_styled, String mathml, double confidence, double latex_confidence) {
 
         this.error = error;
         this.text = text;
         this.latex_styled = latex_styled;
+        this.mathml = mathml;
         this.confidence = confidence;
         this.latex_confidence = latex_confidence;
 
@@ -55,6 +57,13 @@ public class Response {
      */
     public String getLatexStyled() {
         return latex_styled;
+    }
+
+    /**
+     * @return MathML format result.
+     */
+    public String getMathML() {
+        return mathml;
     }
 
     /**

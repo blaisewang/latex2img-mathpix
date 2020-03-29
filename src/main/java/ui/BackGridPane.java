@@ -25,6 +25,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import uk.ac.ed.ph.snuggletex.SnuggleEngine;
+import uk.ac.ed.ph.snuggletex.SnuggleInput;
+import uk.ac.ed.ph.snuggletex.SnuggleSession;
+
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
@@ -248,13 +253,37 @@ public class BackGridPane extends GridPane {
                 errorHandler(response);
                 return;
             }
+            String[] resultList;
+            if(IOUtils.getWorkMode() == 0) {
+                // LaTeX Mode
+                resultList = new String[]{
+                        response.getLatexStyled(),
+                        response.getText(),
+                        IOUtils.thirdResultFormatter(response.getText()),
+                        IOUtils.fourthResultFormatter(response.getText()),
+                };
+            } else {
+                //MathML Mode
+                String mathMLResult;
+                try {
+                    SnuggleEngine engine = new SnuggleEngine();
+                    SnuggleSession session = engine.createSession();
+                    SnuggleInput input = new SnuggleInput("$$" + response.getLatexStyled() + "$$");
+                    session.parseInput(input);
+                    mathMLResult = session.buildXMLString();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
 
-            String[] resultList = new String[]{
-                    response.getLatexStyled(),
-                    response.getText(),
-                    IOUtils.thirdResultFormatter(response.getText()),
-                    IOUtils.fourthResultFormatter(response.getText()),
-            };
+                resultList = new String[]{
+                        response.getText(),
+                        response.getMathML(),
+                        IOUtils.thirdResultFormatter(mathMLResult),
+                        IOUtils.fourthResultFormatter("<?xml version=\"1.0\"?>" + mathMLResult),
+                };
+            }
+
 
             // put default result into the system clipboard
             UIUtils.putStringIntoClipboard(resultList[0]);

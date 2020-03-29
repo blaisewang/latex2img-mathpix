@@ -31,6 +31,9 @@ public class IOUtils {
     private final static String I2L_APP_KEY = "I2L_APP_KEY";
     private final static String I2L_THIRD_RESULT_FORMATTING_OPTION = "I2L_THIRD_RESULT_FORMATTING_OPTION";
     private final static String I2L_FOURTH_RESULT_FORMATTING_OPTION = "I2L_FOURTH_RESULT_FORMATTING_OPTION";
+
+    private final static String I2L_WORK_MODE = "I2L_WORK_MODE";
+
     private final static String I2L_PROXY_ENABLE_OPTION = "I2L_PROXY_ENABLE_OPTION";
     private final static String I2L_PROXY_HOSTNAME = "I2L_PROXY_HOSTNAME";
     private final static String I2L_PROXY_PORT = "I2L_PROXY_PORT";
@@ -140,6 +143,24 @@ public class IOUtils {
      */
     public static APICredentialConfig getAPICredentialConfig() {
         return new APICredentialConfig(preferences.get(I2L_APP_ID, ""), preferences.get(I2L_APP_KEY, ""));
+    }
+
+    /**
+     * Set work mode wrapper option.
+     *
+     * @param option option to be written.
+     */
+    public static void setWorkMode(int option) {
+        preferences.putInt(I2L_WORK_MODE, option);
+    }
+
+    /**
+     * Get work mode wrapper option.
+     *
+     * @return work mode wrapper option.
+     */
+    public static int getWorkMode() {
+        return preferences.getInt(I2L_WORK_MODE, 0);
     }
 
     /**

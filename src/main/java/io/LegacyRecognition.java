@@ -34,6 +34,8 @@ public class LegacyRecognition extends Recognition {
         formatParameters.add("text");
         // modified output to improve the visual appearance
         formatParameters.add("latex_styled");
+        // add for mathml
+        formatParameters.add("mathml");
         parameters.add("formats", formatParameters);
 
         // transforms
@@ -61,6 +63,7 @@ public class LegacyRecognition extends Recognition {
         JsonObject formatOptions = new JsonObject();
         formatOptions.add("text", textFormatOptions);
         formatOptions.add("latex_styled", transformOptions);
+        formatOptions.add("mathml", transformOptions);
 
         parameters.add("format_options", formatOptions);
 

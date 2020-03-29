@@ -71,7 +71,6 @@ public class OCRRequestHelper {
 
         CompletableFuture<String> future = httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString()).
                 thenApply(HttpResponse::body);
-
         try {
             return new Gson().fromJson(future.get(), Response.class);
         } catch (InterruptedException | ExecutionException e) {

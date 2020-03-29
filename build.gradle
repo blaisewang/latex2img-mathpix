@@ -7,7 +7,7 @@ plugins {
 }
 
 group "blaise.img2latex"
-version "0.7.0"
+version "0.7.1"
 
 compileJava {
     sourceCompatibility = 14
@@ -16,13 +16,11 @@ compileJava {
 
 repositories {
     mavenCentral()
-    maven {url 'https://www2.ph.ed.ac.uk/maven2/'}
 }
 
 javafx {
     version = "14"
 }
-
 
 application {
     mainClassName = "entry.Main"
@@ -40,11 +38,6 @@ jar.dependsOn(addVersion)
 dependencies {
     implementation "com.google.code.gson:gson:2.8.6"
     implementation "org.scilab.forge:jlatexmath:1.0.7"
-
-    implementation "uk.ac.ed.ph.snuggletex:snuggletex-core:1.2.2"
-    implementation "uk.ac.ed.ph.snuggletex:snuggletex-upconversion:1.2.2"
-    implementation "uk.ac.ed.ph.snuggletex:snuggletex-jeuclid:1.2.2"
-
     if (project.hasProperty("windows")) {
         implementation "org.openjfx:javafx-base:14:win"
         implementation "org.openjfx:javafx-swing:14:win"

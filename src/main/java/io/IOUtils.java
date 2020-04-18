@@ -229,7 +229,8 @@ public class IOUtils {
      */
     private static String formatHandler(String string, String leftDelimiter, String rightDelimiter) {
 
-        String lDelimiter, rDelimiter;
+        String lDelimiter;
+        String rDelimiter;
 
         if ("$".equals(leftDelimiter)) {
             lDelimiter = leftDelimiter;
@@ -255,7 +256,7 @@ public class IOUtils {
     }
 
     /**
-     * @param string          string to be formatted.
+     * @param string         string to be formatted.
      * @param leftDelimiter  prefix.
      * @param rightDelimiter postfix.
      * @return formatted string with multiple spaces replaced with single spaces.

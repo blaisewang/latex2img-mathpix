@@ -51,7 +51,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        // show API key dialog if the config is invalid
+        // show API credential dialog if the config is invalid
         if (!IOUtils.isAPICredentialConfigValid()) {
             backGridPane.showPreferencesDialog(1);
         }

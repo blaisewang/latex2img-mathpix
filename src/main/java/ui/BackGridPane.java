@@ -82,8 +82,9 @@ public class BackGridPane extends GridPane {
      */
     public BackGridPane() {
 
-        setPadding(new Insets(PREFERRED_MARGIN, 0, PREFERRED_MARGIN, 0));
+        initialise();
         setBackground(BACKGROUND);
+        setPadding(new Insets(PREFERRED_MARGIN, 0, PREFERRED_MARGIN, 0));
 
         // 8 * 2 layout
         setVgap(8);
@@ -94,11 +95,7 @@ public class BackGridPane extends GridPane {
         UIUtils.setDefaultNodeMargin(clipboardTextLabel, PREFERRED_MARGIN, 0);
         add(clipboardTextLabel, 0, 0);
 
-        WAITING_TEXT_LABEL.setFont(Font.font("Arial Black", FontWeight.BOLD, 12));
-        WAITING_TEXT_LABEL.setTextFill(new Color(0.3882, 0.7882, 0.3373, 1));
-        WAITING_TEXT_LABEL.setVisible(false);
-        GridPane.setHalignment(WAITING_TEXT_LABEL, HPos.RIGHT);
-        UIUtils.setDefaultNodeMargin(WAITING_TEXT_LABEL, 0, PREFERRED_MARGIN);
+        // add "Waiting..." text label
         add(WAITING_TEXT_LABEL, 1, 0);
 
         // get bordered ImageView
@@ -114,11 +111,6 @@ public class BackGridPane extends GridPane {
         var renderedBorderPane = setImageViewBorder(RENDERED_IMAGE_VIEW);
         add(renderedBorderPane, 0, 3, 2, 1);
 
-        SUBMIT_BUTTON.setVisible(false);
-        SUBMIT_BUTTON.setFont(Font.font(12));
-        SUBMIT_BUTTON.setFocusTraversable(false);
-        GridPane.setHalignment(SUBMIT_BUTTON, HPos.CENTER);
-
         // show submit button if this option is enabled in the preferences panel
         if (PreferenceHelper.getSubmitButtonEnableOption()) {
             SUBMIT_BUTTON.setVisible(true);
@@ -130,29 +122,11 @@ public class BackGridPane extends GridPane {
         // add front grid panel
         add(FRONT_GRID_PANE, 0, 5, 2, 1);
 
-        // hide copied button if copy MathML button or copy TSV button is clicked.
-        COPY_TSV_BUTTON.setOnMouseClicked(event -> COPIED_BUTTON.setVisible(false));
-        COPY_MATH_ML_BUTTON.setOnMouseClicked(event -> COPIED_BUTTON.setVisible(false));
-
         // add "Confidence" label text
         var confidenceText = UIUtils.getTextLabel("Confidence");
         UIUtils.setDefaultNodeMargin(confidenceText, PREFERRED_MARGIN, 0);
         add(confidenceText, 0, 6, 2, 1);
 
-        // confidence progress bar
-        UIUtils.setDefaultNodeMargin(CONFIDENCE_PROGRESS_BAR, PREFERRED_MARGIN, 0);
-        CONFIDENCE_PROGRESS_BAR.setPrefSize(PREFERRED_WIDTH - 2 * PREFERRED_MARGIN - 1, 20);
-        // red for less than 20% certainty, yellow for 20% ~ 60%, and green for above 60%
-        CONFIDENCE_PROGRESS_BAR.progressProperty().addListener((observable, oldValue, newValue) -> {
-            var progress = newValue.doubleValue();
-            if (progress < 0.2) {
-                setStyle("-fx-accent: #ec4d3d;");
-            } else if (progress < 0.6) {
-                setStyle("-fx-accent: #f8cd46;");
-            } else {
-                setStyle("-fx-accent: #63c956;");
-            }
-        });
         add(CONFIDENCE_PROGRESS_BAR, 0, 7, 2, 1);
 
         setOnKeyReleased(event -> {
@@ -172,6 +146,48 @@ public class BackGridPane extends GridPane {
             }
         });
 
+        // display clipboard image when the app starts
+        displayClipboardImage();
+
+    }
+
+    /**
+     * Node initialisation.
+     */
+    private void initialise() {
+
+        // waiting text label
+        WAITING_TEXT_LABEL.setFont(Font.font("Arial Black", FontWeight.BOLD, 12));
+        WAITING_TEXT_LABEL.setTextFill(new Color(0.3882, 0.7882, 0.3373, 1));
+        WAITING_TEXT_LABEL.setVisible(false);
+        GridPane.setHalignment(WAITING_TEXT_LABEL, HPos.RIGHT);
+        UIUtils.setDefaultNodeMargin(WAITING_TEXT_LABEL, 0, PREFERRED_MARGIN);
+
+        // submit button
+        SUBMIT_BUTTON.setVisible(false);
+        SUBMIT_BUTTON.setFont(Font.font(12));
+        SUBMIT_BUTTON.setFocusTraversable(false);
+        GridPane.setHalignment(SUBMIT_BUTTON, HPos.CENTER);
+
+        // hide copied button if copy MathML button or copy TSV button is clicked.
+        COPY_TSV_BUTTON.setOnMouseClicked(event -> COPIED_BUTTON.setVisible(false));
+        COPY_MATH_ML_BUTTON.setOnMouseClicked(event -> COPIED_BUTTON.setVisible(false));
+
+        // confidence progress bar
+        UIUtils.setDefaultNodeMargin(CONFIDENCE_PROGRESS_BAR, PREFERRED_MARGIN, 0);
+        CONFIDENCE_PROGRESS_BAR.setPrefSize(PREFERRED_WIDTH - 2 * PREFERRED_MARGIN - 1, 20);
+        // red for less than 20% certainty, yellow for 20% ~ 60%, and green for above 60%
+        CONFIDENCE_PROGRESS_BAR.progressProperty().addListener((observable, oldValue, newValue) -> {
+            var progress = newValue.doubleValue();
+            if (progress < 0.2) {
+                setStyle("-fx-accent: #ec4d3d;");
+            } else if (progress < 0.6) {
+                setStyle("-fx-accent: #f8cd46;");
+            } else {
+                setStyle("-fx-accent: #63c956;");
+            }
+        });
+
         // key released event binding
         FRONT_GRID_PANE.onKeyReleasedProperty().bind(onKeyReleasedProperty());
         COPY_TSV_BUTTON.onKeyReleasedProperty().bind(onKeyReleasedProperty());
@@ -180,9 +196,6 @@ public class BackGridPane extends GridPane {
         for (PressCopyTextField pressCopyTextField : resultTextFiledList) {
             pressCopyTextField.onKeyReleasedProperty().bind(onKeyReleasedProperty());
         }
-
-        // display clipboard image when the app starts
-        displayClipboardImage();
 
     }
 

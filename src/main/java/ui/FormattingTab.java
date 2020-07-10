@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * UI.FormattingTab.java
  * Used to display and edit second and third formatting options in the preferences panel.
  */
-public class FormattingTab extends Tab {
+public final class FormattingTab extends Tab {
 
     private static final int PANEL_MARGIN = 20;
     private static final int MINIMUM_MARGIN = 5;

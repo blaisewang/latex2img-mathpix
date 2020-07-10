@@ -23,7 +23,7 @@ import java.net.URISyntaxException;
  * UI.APICredentialsTab.java
  * Used to display and edit API Credentials in the preferences panel.
  */
-public class APICredentialsTab extends Tab {
+public final class APICredentialsTab extends Tab {
 
     private static final int MINIMUM_MARGIN = 10;
 

@@ -12,10 +12,12 @@ import javafx.scene.paint.Color;
  * UI.FormattingTab.java
  * Used to display usage statistics and enable independent submit button.
  */
-public class GeneralTab extends Tab {
+public final class GeneralTab extends Tab {
 
     private static final int PANEL_MARGIN = 20;
-    private static final int MINIMUM_MARGIN = 10;
+    private static final int MINIMUM_MARGIN = 20;
+
+    private static final Label usageLabel = new Label();
 
     public GeneralTab() {
 
@@ -31,17 +33,21 @@ public class GeneralTab extends Tab {
         var gridPane = new GridPane();
         gridPane.setHgap(2);
         gridPane.setVgap(2);
-        gridPane.setPadding(new Insets(PANEL_MARGIN, PANEL_MARGIN + MINIMUM_MARGIN, PANEL_MARGIN, PANEL_MARGIN));
+        gridPane.setPadding(new Insets(PANEL_MARGIN));
 
         var submitButtonEnableOptionCheckBox = new CheckBox("Manual Submit Button");
         submitButtonEnableOptionCheckBox.setSelected(submitButtonEnableOption);
+
+        updateUsageLabelText();
+        GridPane.setMargin(usageLabel, new Insets(MINIMUM_MARGIN));
+        gridPane.add(usageLabel, 0, 0, 2, 1);
 
         // add "restart to take effect" warning label
         var warningLabel = new Label("restart to take effect");
         warningLabel.setVisible(false);
         warningLabel.setTextFill(Color.RED);
         GridPane.setMargin(warningLabel, new Insets(MINIMUM_MARGIN));
-        gridPane.add(warningLabel, 1, 0);
+        gridPane.add(warningLabel, 1, 1);
 
         submitButtonEnableOptionCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             PreferenceHelper.setSubmitButtonEnableOption(newValue);
@@ -50,11 +56,17 @@ public class GeneralTab extends Tab {
         });
 
         GridPane.setMargin(submitButtonEnableOptionCheckBox, new Insets(MINIMUM_MARGIN));
-        gridPane.add(submitButtonEnableOptionCheckBox, 0, 0);
-
+        gridPane.add(submitButtonEnableOptionCheckBox, 0, 1);
 
         setContent(gridPane);
 
+    }
+
+    /**
+     * Update usage label text with usage count.
+     */
+    public final void updateUsageLabelText() {
+        usageLabel.setText("Monthly Usage:  " + PreferenceHelper.getUsageCount());
     }
 
 }

@@ -15,7 +15,7 @@ import javafx.scene.layout.GridPane;
  * UI.ProxyTab.java
  * Used to display and edit HTTP proxy options in the preferences panel.
  */
-public class ProxyTab extends Tab {
+public final class ProxyTab extends Tab {
 
     private static final int PANEL_MARGIN = 20;
     private static final int MINIMUM_MARGIN = 8;

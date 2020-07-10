@@ -16,6 +16,8 @@ public class PreferenceHelper {
     private static final String I2L_SECOND_FORMATTING_OPTION = "I2L_SECOND_FORMATTING_OPTION";
     private static final String I2L_THIRD_FORMATTING_OPTION = "I2L_THIRD_FORMATTING_OPTION";
     private static final String I2L_SUBMIT_BUTTON_ENABLE_OPTION = "I2L_SUBMIT_BUTTON_ENABLE_OPTION";
+    private static final String I2L_API_USAGE_COUNT = "I2L_API_USAGE_COUNT";
+    private static final String I2L_API_USAGE_COUNT_UPDATE_DATE = "I2L_API_USAGE_COUNT_UPDATE_DATE";
 
     private static final String CONFIG_NODE_PATH = "I2L_API_CREDENTIAL_CONFIG";
     private static final Preferences PREFERENCES = Preferences.userRoot().node(CONFIG_NODE_PATH);
@@ -154,6 +156,36 @@ public class PreferenceHelper {
      */
     public static boolean getSubmitButtonEnableOption() {
         return PREFERENCES.getBoolean(I2L_SUBMIT_BUTTON_ENABLE_OPTION, false);
+    }
+
+    /**
+     * Date check and zero usage.
+     */
+    private static void checkDateZeroUsage() {
+        // update date if current date is different from the record
+        var currentDate = IOUtils.getCurrentDate();
+        if (!PREFERENCES.get(I2L_API_USAGE_COUNT_UPDATE_DATE, "").equals(currentDate)) {
+            System.out.println(currentDate);
+            PREFERENCES.put(I2L_API_USAGE_COUNT_UPDATE_DATE, currentDate);
+            PREFERENCES.putLong(I2L_API_USAGE_COUNT, 0);
+        }
+    }
+
+    /**
+     * Update usage count method.
+     */
+    public static void updateUsageCount() {
+        PREFERENCES.putLong(I2L_API_USAGE_COUNT, getUsageCount() + 1);
+    }
+
+    /**
+     * Get usage count method.
+     *
+     * @return usage count.
+     */
+    public static long getUsageCount() {
+        checkDateZeroUsage();
+        return PREFERENCES.getLong(I2L_API_USAGE_COUNT, 0);
     }
 
 }

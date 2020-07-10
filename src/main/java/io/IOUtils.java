@@ -215,15 +215,12 @@ public class IOUtils {
         var option = PreferenceHelper.getSecondResultFormattingOption();
 
         // default for option 2 and others
-        if (option == 0) {
-            return formatHelper(result, "\\begin{equation*}", "\\end{equation*}");
-        } else if (option == 1) {
-            return formatHelper(result, "\\begin{align*}", "\\end{align*}");
-        } else if (option == 3) {
-            return formatHelper(result, "\\[", "\\]");
-        }
-        return formatHelper(result, "$$", "$$");
-
+        return switch (option) {
+            case 0 -> formatHelper(result, "\\begin{equation*}", "\\end{equation*}");
+            case 1 -> formatHelper(result, "\\begin{align*}", "\\end{align*}");
+            case 3 -> formatHelper(result, "\\[", "\\]");
+            default -> formatHelper(result, "$$", "$$");
+        };
     }
 
     /**
@@ -241,13 +238,12 @@ public class IOUtils {
 
         var option = PreferenceHelper.getThirdResultFormattingOption();
 
-        if (option == 1) {
-            return formatHelper(result, "\\begin{align}", "\\end{align}");
-        } else if (option == 2) {
-            return formatHelper(result, "$", "$");
-        }
-
-        return formatHelper(result, "\\begin{equation}", "\\end{equation}");
+        // default for option 0 and others
+        return switch (option) {
+            case 1 -> formatHelper(result, "\\begin{align}", "\\end{align}");
+            case 2 -> formatHelper(result, "$", "$");
+            default -> formatHelper(result, "\\begin{equation}", "\\end{equation}");
+        };
 
     }
 

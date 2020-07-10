@@ -33,7 +33,7 @@ import java.util.Properties;
  * The app will add a tray icon to menu bar and set the window style as StageStyle.UTILITY.
  * The color of the icon dependents on the OS. White for macOS dark, black for macOS light, blue for the rest.
  */
-public class App extends Application {
+public final class App extends Application {
 
     private Stage stage;
 

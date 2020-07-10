@@ -144,9 +144,10 @@ public class BackGridPane extends GridPane {
         CONFIDENCE_PROGRESS_BAR.setPrefSize(PREFERRED_WIDTH - 2 * PREFERRED_MARGIN - 1, 20);
         // red for less than 20% certainty, yellow for 20% ~ 60%, and green for above 60%
         CONFIDENCE_PROGRESS_BAR.progressProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.doubleValue() < 0.2) {
+            var progress = newValue.doubleValue();
+            if (progress < 0.2) {
                 setStyle("-fx-accent: #ec4d3d;");
-            } else if (newValue.doubleValue() < 0.6) {
+            } else if (progress < 0.6) {
                 setStyle("-fx-accent: #f8cd46;");
             } else {
                 setStyle("-fx-accent: #63c956;");
@@ -261,6 +262,9 @@ public class BackGridPane extends GridPane {
 
         // if response received
         if (response != null) {
+
+            // update usage count
+            PreferenceHelper.updateUsageCount();
 
             // error occurred
             if (response.getError() != null) {

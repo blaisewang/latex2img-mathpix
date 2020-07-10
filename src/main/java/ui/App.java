@@ -53,7 +53,7 @@ public class App extends Application {
 
         // show API credential dialog if the config is invalid
         if (!IOUtils.isAPICredentialConfigValid()) {
-            UIUtils.showPreferencesDialog(1);
+            UIUtils.showPreferencesDialog(2);
         }
 
         // indicate whether the tray icon was successfully added to the menu bar
@@ -92,7 +92,7 @@ public class App extends Application {
             // set the app window with minimal platform decorations
             stage.initStyle(StageStyle.UTILITY);
         } else {
-            // right click to show API credential setting dialog
+            // right click to show preferences panel
             scene.setOnMouseReleased(event -> {
                 if (event.getButton() == MouseButton.SECONDARY) {
                     UIUtils.showPreferencesDialog(0);

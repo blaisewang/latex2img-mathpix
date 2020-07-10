@@ -1,6 +1,7 @@
 package ui;
 
 import io.IOUtils;
+import io.PreferenceHelper;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -50,14 +51,14 @@ public class FormattingTab extends Tab {
         );
 
         // load initial second formatting option
-        var secondOption = new AtomicInteger(IOUtils.getSecondResultFormattingOption());
+        var secondOption = new AtomicInteger(PreferenceHelper.getSecondResultFormattingOption());
         secondFormattingOptionList.get(secondOption.get()).setSelected(true);
 
         // toggle changed listener
         final var secondFormattingOptions = new ToggleGroup();
         secondFormattingOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             secondOption.set(secondFormattingOptions.getToggles().indexOf(secondFormattingOptions.getSelectedToggle()));
-            IOUtils.setSecondResultFormattingOption(secondOption.get());
+            PreferenceHelper.setSecondResultFormattingOption(secondOption.get());
             secondResult.setText(IOUtils.secondResultFormatter(ORIGINAL_RESULT).replace("\n", ""));
         });
 
@@ -82,14 +83,14 @@ public class FormattingTab extends Tab {
         );
 
         // load initial third formatting option
-        var thirdOption = new AtomicInteger(IOUtils.getThirdResultFormattingOption());
+        var thirdOption = new AtomicInteger(PreferenceHelper.getThirdResultFormattingOption());
         thirdFormattingOptionList.get(thirdOption.get()).setSelected(true);
 
         // toggle changed listener
         final var thirdFormattingOptions = new ToggleGroup();
         thirdFormattingOptions.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             thirdOption.set(thirdFormattingOptions.getToggles().indexOf(thirdFormattingOptions.getSelectedToggle()));
-            IOUtils.setThirdFormattingOption(thirdOption.get());
+            PreferenceHelper.setThirdFormattingOption(thirdOption.get());
             thirdResult.setText(IOUtils.thirdResultFormatter(ORIGINAL_RESULT).replace("\n", ""));
         });
 

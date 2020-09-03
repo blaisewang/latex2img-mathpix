@@ -50,21 +50,21 @@ public class OCRRequestHelper {
             // proxy enabled
             var config = PreferenceHelper.getProxyConfig();
             if (config.isValid()) {
-                httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).
+                httpClient = HttpClient.newBuilder().
                         proxy(ProxySelector.of(new InetSocketAddress(config.getHostname(), config.getPort()))).build();
             } else {
                 return new Response(IOUtils.INVALID_PROXY_CONFIG_ERROR);
             }
         } else {
-            httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
+            httpClient = HttpClient.newBuilder().build();
         }
 
         // request body
         var requestBody = HttpRequest.BodyPublishers.ofString(parameters.toString());
-        // wait up to 15 seconds
+        // wait up to 20 seconds
         var httpRequest = HttpRequest.newBuilder().uri(URI.create(IOUtils.API_URL)).
                 headers("app_id", appId, "app_key", appKey, "Content-type", "application/json").
-                POST(requestBody).timeout(Duration.ofSeconds(15)).build();
+                POST(requestBody).timeout(Duration.ofSeconds(20)).build();
 
         var completableFuture = httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body);
 

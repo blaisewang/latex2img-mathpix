@@ -23,7 +23,7 @@ public class IOUtils {
     public static final String INVALID_PROXY_CONFIG_ERROR = "Invalid proxy config";
     public static final String NO_IMAGE_FOUND_IN_THE_CLIPBOARD_ERROR = "No image found in the clipboard";
 
-    public static final String API_URL = "https://api.mathpix.com/v3/text";
+    public static final String API_URL = "http://api.mathpix.com/v3/text";
     public static final String MATHPIX_DASHBOARD_URL = "https://dashboard.mathpix.com/";
     public static final String GITHUB_RELEASES_URL = "https://github.com/blaisewang/img2latex-mathpix/releases";
 

@@ -19,7 +19,7 @@ Image2LaTeX 是一个个人项目，仅保留了 Snip 的核心功能——将�
 
 ## 功能
 
-查看 MathpixOCR 网站 [fetures](https://mathpix.com/ocr#features) 章节来了解其 API 的功能。
+查看 MathpixOCR 网站 [features](https://mathpix.com/ocr#features) 章节来了解其 API 的功能。
 
 ### 新功能
 
